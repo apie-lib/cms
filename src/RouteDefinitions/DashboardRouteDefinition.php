@@ -43,4 +43,9 @@ class DashboardRouteDefinition implements HasRouteDefinition
     {
         return 'apie.cms.dashboard.' . $this->id;
     }
+
+    public function getAction(): string
+    {
+        return GetListAction::class;
+    }
 }
