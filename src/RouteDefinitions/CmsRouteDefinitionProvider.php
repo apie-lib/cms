@@ -1,11 +1,11 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
+use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
+use Apie\Common\RouteDefinitions\ActionHashmap;
 use Apie\Core\BoundedContext\BoundedContext;
 use Apie\Core\Context\ApieContext;
 use Apie\Core\Enums\RequestMethod;
-use Apie\Core\RouteDefinitions\ActionHashmap;
-use Apie\Core\RouteDefinitions\RouteDefinitionProviderInterface;
 
 class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
 {

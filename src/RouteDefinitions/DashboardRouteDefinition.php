@@ -3,7 +3,7 @@ namespace Apie\Cms\RouteDefinitions;
 
 use Apie\Cms\Controllers\DashboardController;
 use Apie\Common\ContextConstants;
-use Apie\Core\Actions\HasRouteDefinition;
+use Apie\Common\Interfaces\HasRouteDefinition;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
@@ -41,7 +41,7 @@ class DashboardRouteDefinition implements HasRouteDefinition
     }
     public function getOperationId(): string
     {
-        return 'apie.cms.dashboard.' . $this->id;
+        return 'cms.dashboard';
     }
 
     public function getAction(): string

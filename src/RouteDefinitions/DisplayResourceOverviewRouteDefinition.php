@@ -1,15 +1,14 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\DashboardController;
 use Apie\Cms\Controllers\GetResourceListController;
 use Apie\Common\Actions\GetListAction;
 use Apie\Common\ContextConstants;
-use Apie\Core\Actions\HasRouteDefinition;
+use Apie\Common\Interfaces\HasActionDefinition;
+use Apie\Common\Interfaces\HasRouteDefinition;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
-use Apie\Core\Actions\HasActionDefinition;
 use ReflectionClass;
 
 class DisplayResourceOverviewRouteDefinition implements HasRouteDefinition, HasActionDefinition
@@ -55,6 +54,6 @@ class DisplayResourceOverviewRouteDefinition implements HasRouteDefinition, HasA
 
     public function getOperationId(): string
     {
-        return 'apie.cms.' . $this->id . '.resource.' . $this->className->getShortName();
+        return 'cms.resource.' . $this->className->getShortName();
     }
 }
