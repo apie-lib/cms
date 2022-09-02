@@ -1,6 +1,7 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
+use Apie\Common\ContextConstants;
 use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
 use Apie\Common\RouteDefinitions\ActionHashmap;
 use Apie\Core\BoundedContext\BoundedContext;
@@ -16,10 +17,15 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         $actions[$definition->getOperationId()] = $definition;
 
         $getAllContext = $apieContext->withContext(RequestMethod::class, RequestMethod::GET)
-            /*->withContext(RestApiRouteDefinition::OPENAPI_ALL, true)*/
             ->registerInstance($boundedContext);
         foreach ($boundedContext->resources->filterOnApieContext($getAllContext) as $resource) {
             $definition = new DisplayResourceOverviewRouteDefinition($resource, $boundedContext->getId());
+            $actions[$definition->getOperationId()] = $definition;
+        }
+
+        $globalActionContext = $apieContext->withContext(ContextConstants::GLOBAL_METHOD, true);
+        foreach ($boundedContext->actions->filterOnApieContext($globalActionContext) as $action) {
+            $definition = new RunGlobalMethodFormRouteDefinition($action, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
         }
 
