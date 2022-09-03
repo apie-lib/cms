@@ -7,6 +7,7 @@ use Apie\Fixtures\BoundedContextFactory;
 use Apie\HtmlBuilders\Components\Layout;
 use Apie\HtmlBuilders\Configuration\ApplicationConfiguration;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
+use Apie\HtmlBuilders\Factories\FormComponentFactory;
 use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,7 @@ class DashboardControllerTest extends TestCase
             ->shouldBeCalled()
             ->willReturn('<html></html>');
         $testItem = new DashboardController(
-            new ComponentFactory(new ApplicationConfiguration(), BoundedContextFactory::createHashmap()),
+            new ComponentFactory(new ApplicationConfiguration(), BoundedContextFactory::createHashmap(), FormComponentFactory::create()),
             new ContextBuilderFactory(),
             $renderer->reveal()
         );
