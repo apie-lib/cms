@@ -21,6 +21,7 @@
   },
   "require": {
     "php": ">=8.1",
+    "apie/common": "self.version",
     "apie/core": "self.version",
     "apie/html-builders": "self.version",
     "nyholm/psr7": "^1.5"
