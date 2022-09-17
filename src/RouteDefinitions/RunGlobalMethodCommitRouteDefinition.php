@@ -44,6 +44,6 @@ class RunGlobalMethodCommitRouteDefinition extends AbstractCmsRouteDefinition
     {
         $methodName = $this->method->getName();
         $suffix = $methodName === '__invoke' ? '' : ('-' . $methodName);
-        return 'commit-call-method-' . $this->method->getDeclaringClass()->getShortName() . $suffix;
+        return 'call-method-commit-' . $this->method->getDeclaringClass()->getShortName() . $suffix;
     }
 }
