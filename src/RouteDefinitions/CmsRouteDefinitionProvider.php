@@ -37,6 +37,8 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         foreach ($boundedContext->actions->filterOnApieContext($globalActionContext) as $action) {
             $definition = new RunGlobalMethodFormRouteDefinition($action, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
+            $definition = new RunGlobalMethodCommitRouteDefinition($action, $boundedContext->getId());
+            $actions[$definition->getOperationId()] = $definition;
         }
 
         return new ActionHashmap($actions);

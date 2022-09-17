@@ -43,8 +43,8 @@ class FormCommitController
             new BoundedContextId($output->apieContext->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
         );
 
-        $redirectUrl = $request->getUri();
-        if ($output->getStatusCode() < 300) {
+        $redirectUrl = (string) $request->getUri();
+        if ($output->getStatusCode() < 300 && $output->apieContext->hasContext(ContextConstants::RESOURCE_NAME)) {
             $class = new ReflectionClass($output->apieContext->getContext(ContextConstants::RESOURCE_NAME));
             $redirectUrl = $configuration->getContextUrl('resource/' . $class->getShortName());
         }
