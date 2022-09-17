@@ -4,7 +4,10 @@ namespace Apie\Cms\Controllers;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\Actions\ActionResponse;
+use Apie\Core\BoundedContext\BoundedContextHashmap;
+use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
+use Apie\HtmlBuilders\Configuration\ApplicationConfiguration;
 use Apie\Serializer\EncoderHashmap;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
@@ -15,7 +18,9 @@ class FormCommitController
 {
     public function __construct(
         private readonly ContextBuilderFactory $contextBuilderFactory,
-        private readonly ApieFacade $apieFacade
+        private readonly ApieFacade $apieFacade,
+        private readonly ApplicationConfiguration $applicationConfiguration,
+        private readonly BoundedContextHashmap $boundedContextHashmap
     ) {
     }
 
@@ -32,11 +37,16 @@ class FormCommitController
     private function createResponse(ServerRequestInterface $request, ActionResponse $output): ResponseInterface
     {
         $psr17Factory = new Psr17Factory();
+        $configuration = $this->applicationConfiguration->createConfiguration(
+            $output->apieContext,
+            $this->boundedContextHashmap,
+            new BoundedContextId($output->apieContext->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
+        );
 
         $redirectUrl = $request->getUri();
         if ($output->getStatusCode() < 300) {
             $class = new ReflectionClass($output->apieContext->getContext(ContextConstants::RESOURCE_NAME));
-            $redirectUrl = '/cms/resource/' . $class->getShortName();
+            $redirectUrl = $configuration->getContextUrl('resource/' . $class->getShortName());
         }
 
         return $psr17Factory->createResponse(301)->withHeader('Location', $redirectUrl);
