@@ -22,6 +22,8 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         foreach ($boundedContext->resources->filterOnApieContext($postContext) as $resource) {
             $definition = new CreateResourceFormRouteDefinition($resource, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
+            $definition = new CreateResourceCommitRouteDefinition($resource, $boundedContext->getId());
+            $actions[$definition->getOperationId()] = $definition;
         }
 
         $getAllContext = $apieContext->withContext(RequestMethod::class, RequestMethod::GET)
