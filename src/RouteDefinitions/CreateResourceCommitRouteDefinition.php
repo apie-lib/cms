@@ -1,7 +1,6 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\CreateResourceFormController;
 use Apie\Cms\Controllers\FormCommitController;
 use Apie\Common\Actions\CreateObjectAction;
 use Apie\Core\BoundedContext\BoundedContextId;

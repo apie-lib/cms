@@ -2,7 +2,6 @@
 namespace Apie\Cms\RouteDefinitions;
 
 use Apie\Cms\Controllers\FormCommitController;
-use Apie\Cms\Controllers\RunGlobalMethodFormController;
 use Apie\Common\Actions\RunAction;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
