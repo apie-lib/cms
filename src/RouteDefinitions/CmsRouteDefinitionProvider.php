@@ -19,7 +19,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         $postContext = $apieContext->withContext(RequestMethod::class, RequestMethod::POST)
             ->withContext(ContextConstants::CREATE_OBJECT, true)
             ->registerInstance($boundedContext);
-        foreach ($boundedContext->resources->filterOnApieContext($postContext) as $resource) {
+        foreach ($boundedContext->resources->filterOnApieContext($postContext, false) as $resource) {
             $definition = new CreateResourceFormRouteDefinition($resource, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
             $definition = new CreateResourceCommitRouteDefinition($resource, $boundedContext->getId());
@@ -28,13 +28,13 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
 
         $getAllContext = $apieContext->withContext(RequestMethod::class, RequestMethod::GET)
             ->registerInstance($boundedContext);
-        foreach ($boundedContext->resources->filterOnApieContext($getAllContext) as $resource) {
+        foreach ($boundedContext->resources->filterOnApieContext($getAllContext, false) as $resource) {
             $definition = new DisplayResourceOverviewRouteDefinition($resource, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
         }
 
         $globalActionContext = $apieContext->withContext(ContextConstants::GLOBAL_METHOD, true);
-        foreach ($boundedContext->actions->filterOnApieContext($globalActionContext) as $action) {
+        foreach ($boundedContext->actions->filterOnApieContext($globalActionContext, false) as $action) {
             $definition = new RunGlobalMethodFormRouteDefinition($action, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
             $definition = new RunGlobalMethodCommitRouteDefinition($action, $boundedContext->getId());
