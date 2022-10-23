@@ -2,6 +2,7 @@
 namespace Apie\Cms\RouteDefinitions;
 
 use Apie\Cms\Controllers\DashboardController;
+use Apie\Common\Actions\GetListAction;
 use Apie\Common\ContextConstants;
 use Apie\Common\Interfaces\HasRouteDefinition;
 use Apie\Core\BoundedContext\BoundedContextId;
