@@ -25,6 +25,7 @@ abstract class AbstractCmsRouteDefinition implements HasRouteDefinition, HasActi
         $actionClass = $this->getAction();
         $attributes = $actionClass::getRouteAttributes($this->class, $this->method);
         $attributes[ContextConstants::APIE_ACTION] = $this->getAction();
+        $attributes[ContextConstants::CMS] = true;
         $attributes[ContextConstants::OPERATION_ID] = $this->getOperationId();
         $attributes[ContextConstants::BOUNDED_CONTEXT_ID] = $this->boundedContextId->toNative();
         return $attributes;
