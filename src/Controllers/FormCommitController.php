@@ -8,10 +8,12 @@ use Apie\Core\BoundedContext\BoundedContextHashmap;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Configuration\ApplicationConfiguration;
+use Apie\Serializer\Exceptions\ValidationException;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FormCommitController
 {
@@ -46,6 +48,15 @@ class FormCommitController
         if ($output->getStatusCode() < 300 && $output->apieContext->hasContext(ContextConstants::RESOURCE_NAME)) {
             $class = new ReflectionClass($output->apieContext->getContext(ContextConstants::RESOURCE_NAME));
             $redirectUrl = $configuration->getContextUrl('resource/' . $class->getShortName());
+        }
+
+        if (
+            isset($output->error)
+            && $output->error instanceof ValidationException
+            && $output->apieContext->hasContext(SessionInterface::class)
+        ) {
+            $session = $output->apieContext->getContext(SessionInterface::class);
+            $session->set('_validation_errors', $output->error);
         }
 
         return $psr17Factory->createResponse(301)->withHeader('Location', $redirectUrl);
