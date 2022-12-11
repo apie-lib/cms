@@ -50,15 +50,14 @@ class FormCommitController
             $redirectUrl = $configuration->getContextUrl('resource/' . $class->getShortName());
         }
 
-        if (isset($output->error)) {
+        if (isset($output->error) && $output->apieContext->hasContext(SessionInterface::class)) {
             $session = $output->apieContext->getContext(SessionInterface::class);
             $session->set('_filled_in', $output->apieContext->getContext(ContextConstants::RAW_CONTENTS));
         
             if (
                 $output->error instanceof ValidationException
-                && $output->apieContext->hasContext(SessionInterface::class)
             ) {
-                $session->set('_validation_errors', $output->error->getErrors());
+                $session->set('_validation_errors', $output->error->getErrors()->toArray());
             } else {
                 $session->set('_validation_errors', ['' => $output->error->getMessage()]);
             }
