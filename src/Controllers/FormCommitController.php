@@ -52,7 +52,9 @@ class FormCommitController
 
         if (isset($output->error) && $output->apieContext->hasContext(SessionInterface::class)) {
             $session = $output->apieContext->getContext(SessionInterface::class);
-            $session->set('_filled_in', $output->apieContext->getContext(ContextConstants::RAW_CONTENTS));
+            $contents = $output->apieContext->getContext(ContextConstants::RAW_CONTENTS);
+            unset($contents['_csrf']);
+            $session->set('_filled_in', $contents);
         
             if (
                 $output->error instanceof ValidationException
