@@ -1,6 +1,8 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
+use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForExistingObjectRouteDefinition;
+use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForNewObjectRouteDefinition;
 use Apie\Common\ContextConstants;
 use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
 use Apie\Common\RouteDefinitions\ActionHashmap;
@@ -8,6 +10,8 @@ use Apie\Core\BoundedContext\BoundedContext;
 use Apie\Core\Context\ApieContext;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\Metadata\MetadataFactory;
+use Apie\Core\Metadata\MetadataInterface;
+use ReflectionClass;
 
 class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
 {
@@ -25,6 +29,19 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
             $actions[$definition->getOperationId()] = $definition;
             $definition = new CreateResourceCommitRouteDefinition($resource, $boundedContext->getId());
             $actions[$definition->getOperationId()] = $definition;
+            $metadata = MetadataFactory::getCreationMetadata($resource, $postContext);
+            if (class_exists(DropdownOptionsForNewObjectRouteDefinition::class)) {
+                $definitions = $this->getDropdownActions(
+                    $resource,
+                    $metadata, 
+                    $postContext,
+                    $boundedContext,
+                    DropdownOptionsForNewObjectRouteDefinition::class
+                );
+                foreach ($definitions as $definition) {
+                    $actions[$definition->getOperationId()] = $definition;
+                }
+            }
         }
 
         $patchSingleContext = $apieContext->withContext(RequestMethod::class, RequestMethod::PATCH)
@@ -35,6 +52,18 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
             if ($metadata->getHashmap()->count()) {
                 $definition = new ModifyResourceFormRouteDefinition($resource, $boundedContext->getId());
                 $actions[$definition->getOperationId()] = $definition;
+                if (class_exists(DropdownOptionsForExistingObjectRouteDefinition::class)) {
+                    $definitions = $this->getDropdownActions(
+                        $resource,
+                        $metadata, 
+                        $patchSingleContext,
+                        $boundedContext,
+                        DropdownOptionsForExistingObjectRouteDefinition::class
+                    );
+                    foreach ($definitions as $definition) {
+                        $actions[$definition->getOperationId()] = $definition;
+                    }
+                }
             }
         }
 
@@ -54,5 +83,27 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         }
 
         return new ActionHashmap($actions);
+    }
+
+    /**
+     * @template T of DropdownOptionsForNewObjectRouteDefinition
+     * @param ReflectionClass<object> $resource
+     * @param class-string<T> $routeDefinitionClass
+     * @return array<int, T>
+     */
+    private function getDropdownActions(
+        ReflectionClass $resource,
+        MetadataInterface $metadata, 
+        ApieContext $context,
+        BoundedContext $boundedContext,
+        string $routeDefinitionClass
+    ): array
+    {
+        $result = [];
+        if ($metadata->getHashmap()->filterOnContext($context, setters: true)->count()) {
+            $result[] = new $routeDefinitionClass($resource, $boundedContext->getId());
+        }
+
+        return $result;
     }
 }
