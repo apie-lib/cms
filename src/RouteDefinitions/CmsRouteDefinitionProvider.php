@@ -86,7 +86,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
     }
 
     /**
-     * @template T of DropdownOptionsForNewObjectRouteDefinition
+     * @template T of DropdownOptionsForNewObjectRouteDefinition|DropdownOptionsForExistingObjectRouteDefinition
      * @param ReflectionClass<object> $resource
      * @param class-string<T> $routeDefinitionClass
      * @return array<int, T>

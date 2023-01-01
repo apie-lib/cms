@@ -4,7 +4,9 @@ namespace Apie\Cms\RouteDefinitions;
 use Apie\Cms\Controllers\DashboardController;
 use Apie\Common\Actions\GetListAction;
 use Apie\Common\ContextConstants;
+use Apie\Common\Enums\UrlPrefix;
 use Apie\Common\Interfaces\HasRouteDefinition;
+use Apie\Common\Lists\UrlPrefixList;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
@@ -48,5 +50,10 @@ class DashboardRouteDefinition implements HasRouteDefinition
     public function getAction(): string
     {
         return GetListAction::class;
+    }
+
+    public function getUrlPrefixes(): UrlPrefixList
+    {
+        return new UrlPrefixList([UrlPrefix::CMS]);
     }
 }
