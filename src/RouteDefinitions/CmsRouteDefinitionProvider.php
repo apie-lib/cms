@@ -33,7 +33,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
             if (class_exists(DropdownOptionsForNewObjectRouteDefinition::class)) {
                 $definitions = $this->getDropdownActions(
                     $resource,
-                    $metadata, 
+                    $metadata,
                     $postContext,
                     $boundedContext,
                     DropdownOptionsForNewObjectRouteDefinition::class
@@ -55,7 +55,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                 if (class_exists(DropdownOptionsForExistingObjectRouteDefinition::class)) {
                     $definitions = $this->getDropdownActions(
                         $resource,
-                        $metadata, 
+                        $metadata,
                         $patchSingleContext,
                         $boundedContext,
                         DropdownOptionsForExistingObjectRouteDefinition::class
@@ -93,12 +93,11 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
      */
     private function getDropdownActions(
         ReflectionClass $resource,
-        MetadataInterface $metadata, 
+        MetadataInterface $metadata,
         ApieContext $context,
         BoundedContext $boundedContext,
         string $routeDefinitionClass
-    ): array
-    {
+    ): array {
         $result = [];
         if ($metadata->getHashmap()->filterOnContext($context, setters: true)->count()) {
             $result[] = new $routeDefinitionClass($resource, $boundedContext->getId());
