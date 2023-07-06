@@ -23,6 +23,16 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class,
+            array(
+              0 =>
+              array(
+                'name' => 'apie.core.route_definition',
+              ),
+            )
+        );
         $this->app->tag([\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class], 'apie.core.route_definition');
         $this->app->singleton(
             \Apie\Cms\Controllers\DashboardController::class,
@@ -35,8 +45,15 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\DashboardController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
         $this->app->tag([\Apie\Cms\Controllers\DashboardController::class], 'controller.service_arguments');
-        $this->app->bind(\Apie\Cms\EmptyDashboard::class, 'apie.cms.dashboard_content');
+        $this->app->bind('apie.cms.dashboard_content', \Apie\Cms\EmptyDashboard::class);
         
         $this->app->singleton(
             \Apie\Cms\EmptyDashboard::class,
@@ -57,6 +74,13 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\GetResourceListController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
         $this->app->tag([\Apie\Cms\Controllers\GetResourceListController::class], 'controller.service_arguments');
         $this->app->singleton(
             \Apie\Cms\Controllers\RunGlobalMethodFormController::class,
@@ -68,6 +92,13 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
                 );
             }
+        );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\RunGlobalMethodFormController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
         );
         $this->app->tag([\Apie\Cms\Controllers\RunGlobalMethodFormController::class], 'controller.service_arguments');
         $this->app->singleton(
@@ -81,6 +112,13 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\CreateResourceFormController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
         $this->app->tag([\Apie\Cms\Controllers\CreateResourceFormController::class], 'controller.service_arguments');
         $this->app->singleton(
             \Apie\Cms\Controllers\ModifyResourceFormController::class,
@@ -93,6 +131,13 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\ModifyResourceFormController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
         $this->app->tag([\Apie\Cms\Controllers\ModifyResourceFormController::class], 'controller.service_arguments');
         $this->app->singleton(
             \Apie\Cms\Controllers\FormCommitController::class,
@@ -104,6 +149,13 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class)
                 );
             }
+        );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\FormCommitController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
         );
         $this->app->tag([\Apie\Cms\Controllers\FormCommitController::class], 'controller.service_arguments');
         $this->app->singleton(
