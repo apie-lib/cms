@@ -7,7 +7,6 @@ use Illuminate\Support\ServiceProvider;
 /**
  * This file is generated with apie/service-provider-generator from file: cms.yaml
  * @codecoverageIgnore
- * @phpstan-ignore
  */
 class CmsServiceProvider extends ServiceProvider
 {
@@ -29,11 +28,11 @@ class CmsServiceProvider extends ServiceProvider
             array(
               0 =>
               array(
-                'name' => 'apie.core.route_definition',
+                'name' => 'apie.common.route_definition',
               ),
             )
         );
-        $this->app->tag([\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class], 'apie.core.route_definition');
+        $this->app->tag([\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class], 'apie.common.route_definition');
         $this->app->singleton(
             \Apie\Cms\Controllers\DashboardController::class,
             function ($app) {

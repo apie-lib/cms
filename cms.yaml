@@ -1,7 +1,7 @@
 services:
   Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider:
     tags: 
-      - name: apie.core.route_definition
+      - name: apie.common.route_definition
   Apie\Cms\Controllers\DashboardController:
     arguments:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
