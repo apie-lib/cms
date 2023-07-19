@@ -40,7 +40,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
                     $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
-                    $app->make(\Apie\ApieBundle\Wrappers\DashboardContents::class)
+                    $app->make('apie.cms.dashboard_content')
                 );
             }
         );

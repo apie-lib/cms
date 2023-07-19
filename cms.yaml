@@ -7,7 +7,7 @@ services:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
-      - '@Apie\ApieBundle\Wrappers\DashboardContents'
+      - '@apie.cms.dashboard_content'
     tags: ['controller.service_arguments']
 
   apie.cms.dashboard_content:
