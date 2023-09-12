@@ -25,9 +25,9 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class,
-            array (
-              0 => 
-              array (
+            array(
+              0 =>
+              array(
                 'name' => 'apie.common.route_definition',
               ),
             )
@@ -47,7 +47,7 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\Controllers\DashboardController::class,
-            array (
+            array(
               0 => 'controller.service_arguments',
             )
         );
@@ -76,7 +76,7 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\Controllers\GetResourceListController::class,
-            array (
+            array(
               0 => 'controller.service_arguments',
             )
         );
@@ -95,7 +95,7 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\Controllers\RunGlobalMethodFormController::class,
-            array (
+            array(
               0 => 'controller.service_arguments',
             )
         );
@@ -114,7 +114,7 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\Controllers\CreateResourceFormController::class,
-            array (
+            array(
               0 => 'controller.service_arguments',
             )
         );
@@ -133,7 +133,7 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\Controllers\ModifyResourceFormController::class,
-            array (
+            array(
               0 => 'controller.service_arguments',
             )
         );
@@ -152,7 +152,7 @@ class CmsServiceProvider extends ServiceProvider
         \Apie\ServiceProviderGenerator\TagMap::register(
             $this->app,
             \Apie\Cms\Controllers\FormCommitController::class,
-            array (
+            array(
               0 => 'controller.service_arguments',
             )
         );
