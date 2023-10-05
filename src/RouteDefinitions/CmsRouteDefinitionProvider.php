@@ -82,6 +82,18 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
             $actions[$definition->getOperationId()] = $definition;
         }
 
+        $resourceActionContext = $apieContext->withContext(ContextConstants::RESOURCE_METHOD, true);
+        foreach ($boundedContext->resources->filterOnApieContext($resourceActionContext) as $resource) {
+            foreach ($resourceActionContext->getApplicableMethods($resource, false) as $method) {
+                $definition = new RunMethodCallOnSingleResourceFormRouteDefinition(
+                    $resource,
+                    $method,
+                    $boundedContext->getId()
+                );
+                $map[$definition->getOperationId()] = $definition;
+            }
+        }
+
         return new ActionHashmap($actions);
     }
 
