@@ -40,7 +40,8 @@ class RunMethodCallOnSingleResourceFormController
         assert($method instanceof ReflectionMethod);
         $id = $context->getContext(ContextConstants::RESOURCE_ID);
         $resource = $this->apieFacade->find(
-            IdentifierUtils::entityClassToIdentifier($context->getContext(ContextConstants::RESOURCE_NAME))->newInstance($id),
+            IdentifierUtils::entityClassToIdentifier(new ReflectionClass($context->getContext(ContextConstants::RESOURCE_NAME)))
+                ->newInstance($id),
             new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
         );
         $context = $context->withContext(ContextConstants::RESOURCE, $resource);
