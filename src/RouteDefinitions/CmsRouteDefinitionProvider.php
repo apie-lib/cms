@@ -90,7 +90,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                     $method,
                     $boundedContext->getId()
                 );
-                $map[$definition->getOperationId()] = $definition;
+                $actions[$definition->getOperationId()] = $definition;
             }
         }
 
