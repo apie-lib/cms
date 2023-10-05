@@ -1,7 +1,7 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\RunMethodCallOnSingleResourceController;
+use Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController;
 use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
@@ -32,7 +32,7 @@ class RunMethodCallOnSingleResourceFormRouteDefinition extends AbstractCmsRouteD
 
     public function getController(): string
     {
-        return RunMethodCallOnSingleResourceController::class;
+        return RunMethodCallOnSingleResourceFormController::class;
     }
 
     public function getAction(): string
