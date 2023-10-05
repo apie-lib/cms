@@ -2,6 +2,7 @@
 namespace Apie\Cms\RouteDefinitions;
 
 use Apie\Cms\Controllers\RunGlobalMethodFormController;
+use Apie\Cms\Controllers\RunMethodCallOnSingleResourceController;
 use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
@@ -32,7 +33,7 @@ class RunMethodCallOnSingleResourceFormRouteDefinition extends AbstractCmsRouteD
 
     public function getController(): string
     {
-        return RunGlobalMethodFormController::class;
+        return RunMethodCallOnSingleResourceController::class;
     }
 
     public function getAction(): string
