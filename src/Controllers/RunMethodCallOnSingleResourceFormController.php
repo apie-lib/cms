@@ -13,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionMethod;
 
-class RunMethodCallOnSingleResourceController
+class RunMethodCallOnSingleResourceFormController
 {
     public function __construct(
         private readonly ApieFacade $apieFacade,
