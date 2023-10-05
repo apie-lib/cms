@@ -5,6 +5,7 @@ use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
+use Apie\Core\IdentifierUtils;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
 use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -37,6 +38,12 @@ class RunMethodCallOnSingleResourceFormController
             $method
         );
         assert($method instanceof ReflectionMethod);
+        $id = $context->getContext(ContextConstants::RESOURCE_ID);
+        $resource = $this->apieFacade->find(
+            IdentifierUtils::entityClassToIdentifier($context->getContext(ContextConstants::RESOURCE_NAME))->newInstance($id),
+            new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
+        );
+        $context = $context->withContext(ContextConstants::RESOURCE, $resource);
         $component = $this->componentFactory->createFormForMethod(
             $request->getAttribute(ContextConstants::METHOD_NAME) ? : 'Form',
             $method,
