@@ -101,6 +101,25 @@ class CmsServiceProvider extends ServiceProvider
         );
         $this->app->tag([\Apie\Cms\Controllers\RunGlobalMethodFormController::class], 'controller.service_arguments');
         $this->app->singleton(
+            \Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController::class,
+            function ($app) {
+                return new \Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController(
+                    $app->make(\Apie\Common\ApieFacade::class),
+                    $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
+                    $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                );
+            }
+        );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
+        $this->app->tag([\Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController::class], 'controller.service_arguments');
+        $this->app->singleton(
             \Apie\Cms\Controllers\CreateResourceFormController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\CreateResourceFormController(

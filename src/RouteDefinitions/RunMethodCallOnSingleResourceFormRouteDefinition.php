@@ -1,7 +1,6 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\RunGlobalMethodFormController;
 use Apie\Cms\Controllers\RunMethodCallOnSingleResourceController;
 use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContextId;
