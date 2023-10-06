@@ -91,6 +91,12 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                     $boundedContext->getId()
                 );
                 $actions[$definition->getOperationId()] = $definition;
+                $definition = new RunMethodCallOnSingleResourceCommitRouteDefinition(
+                    $resource,
+                    $method,
+                    $boundedContext->getId()
+                );
+                $actions[$definition->getOperationId()] = $definition;
             }
         }
 
