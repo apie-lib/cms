@@ -18,7 +18,8 @@ class CmsServiceProvider extends ServiceProvider
             \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class,
             function ($app) {
                 return new \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider(
-                
+                    $app->make(\Apie\Common\ActionDefinitionProvider::class),
+                    $app->make(\Psr\Log\LoggerInterface::class)
                 );
             }
         );

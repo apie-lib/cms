@@ -2,6 +2,8 @@
 namespace Apie\Cms\RouteDefinitions;
 
 use Apie\Cms\Controllers\FormCommitController;
+use Apie\Common\ActionDefinitions\ActionDefinitionInterface;
+use Apie\Common\ActionDefinitions\RunResourceMethodDefinition;
 use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
@@ -11,6 +13,14 @@ use ReflectionMethod;
 
 class RunMethodCallOnSingleResourceCommitRouteDefinition extends AbstractCmsRouteDefinition
 {
+    public static function createFrom(ActionDefinitionInterface $actionDefinition): ?AbstractCmsRouteDefinition
+    {
+        if ($actionDefinition instanceof RunResourceMethodDefinition) {
+            return new self($actionDefinition->getResourceName(), $actionDefinition->getMethod(), $actionDefinition->getBoundedContextId());
+        }
+        return null;
+    }
+
     public function __construct(ReflectionClass $class, ReflectionMethod $method, BoundedContextId $boundedContextId)
     {
         parent::__construct($class, $boundedContextId, $method);

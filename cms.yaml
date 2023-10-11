@@ -1,5 +1,8 @@
 services:
   Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider:
+    arguments:
+      - '@Apie\Common\ActionDefinitionProvider'
+      - '@Psr\Log\LoggerInterface'
     tags: 
       - name: apie.common.route_definition
   Apie\Cms\Controllers\DashboardController:
