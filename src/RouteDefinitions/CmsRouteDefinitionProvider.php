@@ -18,6 +18,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
     private const CLASSES = [
         CreateResourceFormRouteDefinition::class,
         CreateResourceCommitRouteDefinition::class,
+        DisplayResourceRouteDefinition::class,
         DisplayResourceOverviewRouteDefinition::class,
         ModifyResourceFormRouteDefinition::class,
         RunGlobalMethodCommitRouteDefinition::class,

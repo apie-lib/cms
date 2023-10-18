@@ -8,6 +8,7 @@ use Apie\Fixtures\BoundedContextFactory;
 use Apie\HtmlBuilders\Components\Layout;
 use Apie\HtmlBuilders\Configuration\ApplicationConfiguration;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
+use Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory;
 use Apie\HtmlBuilders\Factories\FormComponentFactory;
 use Apie\HtmlBuilders\Factories\ResourceActionFactory;
 use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
@@ -43,6 +44,7 @@ class DashboardControllerTest extends TestCase
                 new ApplicationConfiguration(),
                 BoundedContextFactory::createHashmap(),
                 FormComponentFactory::create(),
+                FieldDisplayComponentFactory::create(),
                 new ResourceActionFactory(new ActionDefinitionProvider())
             ),
             new ContextBuilderFactory(),
