@@ -53,6 +53,14 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\DashboardController::class], 'controller.service_arguments');
+        $this->app->singleton(
+            \Apie\Cms\LayoutPicker::class,
+            function ($app) {
+                return new \Apie\Cms\LayoutPicker(
+                
+                );
+            }
+        );
         $this->app->bind('apie.cms.dashboard_content', \Apie\Cms\EmptyDashboard::class);
         
         $this->app->singleton(
@@ -108,7 +116,8 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
         );
@@ -127,7 +136,8 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
         );
@@ -146,7 +156,8 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
         );
@@ -165,7 +176,8 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
         );

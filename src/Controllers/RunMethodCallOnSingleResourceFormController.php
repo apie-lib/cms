@@ -1,6 +1,7 @@
 <?php
 namespace Apie\Cms\Controllers;
 
+use Apie\Cms\LayoutPicker;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
@@ -20,7 +21,8 @@ class RunMethodCallOnSingleResourceFormController
         private readonly ApieFacade $apieFacade,
         private readonly ComponentFactory $componentFactory,
         private readonly ContextBuilderFactory $contextBuilderFactory,
-        private readonly ComponentRendererInterface $renderer
+        private readonly ComponentRendererInterface $renderer,
+        private readonly LayoutPicker $layoutPicker,
     ) {
     }
 
@@ -45,11 +47,13 @@ class RunMethodCallOnSingleResourceFormController
             new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
         );
         $context = $context->withContext(ContextConstants::RESOURCE, $resource);
+        $layout = $this->layoutPicker->pickLayout($request);
         $component = $this->componentFactory->createFormForMethod(
             $request->getAttribute(ContextConstants::METHOD_NAME) ? : 'Form',
             $method,
             new BoundedContextId($request->getAttribute(ContextConstants::BOUNDED_CONTEXT_ID)),
-            $context
+            $context,
+            $layout
         );
         $html = $this->renderer->render($component);
         $psr17Factory = new Psr17Factory();

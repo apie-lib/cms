@@ -13,6 +13,8 @@ services:
       - '@apie.cms.dashboard_content'
     tags: ['controller.service_arguments']
 
+  Apie\Cms\LayoutPicker:
+
   apie.cms.dashboard_content:
     alias: Apie\Cms\EmptyDashboard
   
@@ -40,6 +42,7 @@ services:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
   Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController:
@@ -48,6 +51,7 @@ services:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
   Apie\Cms\Controllers\CreateResourceFormController:
@@ -56,6 +60,7 @@ services:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
   Apie\Cms\Controllers\ModifyResourceFormController:
@@ -64,6 +69,7 @@ services:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
   Apie\Cms\Controllers\FormCommitController:

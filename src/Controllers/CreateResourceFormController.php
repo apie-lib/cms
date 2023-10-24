@@ -1,6 +1,7 @@
 <?php
 namespace Apie\Cms\Controllers;
 
+use Apie\Cms\LayoutPicker;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
@@ -18,7 +19,8 @@ class CreateResourceFormController
         private readonly ApieFacade $apieFacade,
         private readonly ComponentFactory $componentFactory,
         private readonly ContextBuilderFactory $contextBuilderFactory,
-        private readonly ComponentRendererInterface $renderer
+        private readonly ComponentRendererInterface $renderer,
+        private readonly LayoutPicker $layoutPicker
     ) {
     }
 
@@ -34,7 +36,8 @@ class CreateResourceFormController
             'Create ' . $class->getShortName(),
             $class,
             new BoundedContextId($request->getAttribute(ContextConstants::BOUNDED_CONTEXT_ID)),
-            $context
+            $context,
+            $this->layoutPicker->pickLayout($request)
         );
         $html = $this->renderer->render($component);
         $psr17Factory = new Psr17Factory();
