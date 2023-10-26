@@ -72,6 +72,15 @@ services:
       - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
+  Apie\Cms\Controllers\RemoveResourceFormController:
+    arguments:
+      - '@Apie\Common\ApieFacade'
+      - '@Apie\HtmlBuilders\Factories\ComponentFactory'
+      - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
+      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\LayoutPicker'
+    tags: ['controller.service_arguments']
+
   Apie\Cms\Controllers\FormCommitController:
     arguments:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'

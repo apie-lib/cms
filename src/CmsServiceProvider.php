@@ -190,6 +190,26 @@ class CmsServiceProvider extends ServiceProvider
         );
         $this->app->tag([\Apie\Cms\Controllers\ModifyResourceFormController::class], 'controller.service_arguments');
         $this->app->singleton(
+            \Apie\Cms\Controllers\RemoveResourceFormController::class,
+            function ($app) {
+                return new \Apie\Cms\Controllers\RemoveResourceFormController(
+                    $app->make(\Apie\Common\ApieFacade::class),
+                    $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
+                    $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\LayoutPicker::class)
+                );
+            }
+        );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\RemoveResourceFormController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
+        $this->app->tag([\Apie\Cms\Controllers\RemoveResourceFormController::class], 'controller.service_arguments');
+        $this->app->singleton(
             \Apie\Cms\Controllers\FormCommitController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\FormCommitController(
