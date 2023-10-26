@@ -22,6 +22,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         DisplayResourceOverviewRouteDefinition::class,
         ModifyResourceFormRouteDefinition::class,
         RemoveResourceFormRouteDefinition::class,
+        RemoveResourceFormCommitRouteDefinition::class,
         RunGlobalMethodCommitRouteDefinition::class,
         RunGlobalMethodFormRouteDefinition::class,
         RunMethodCallOnSingleResourceCommitRouteDefinition::class,
