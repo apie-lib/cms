@@ -81,7 +81,7 @@ class FormCommitController
                 } else {
                     $previousResults = $session->get('_output_results', []);
                     $uniqueId = UuidV4::createRandom()->toNative();
-                    $previousResults[$uniqueId] = $output->result;
+                    $previousResults[$uniqueId] = $output;
                     $session->set('_output_results', $previousResults);
                     $redirectUrl = $configuration->getContextUrl('last-action-result/' . $uniqueId);
                 }

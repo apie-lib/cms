@@ -72,6 +72,24 @@ class CmsServiceProvider extends ServiceProvider
             }
         );
         $this->app->singleton(
+            \Apie\Cms\Controllers\LastActionResultController::class,
+            function ($app) {
+                return new \Apie\Cms\Controllers\LastActionResultController(
+                    $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
+                    $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                );
+            }
+        );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Controllers\LastActionResultController::class,
+            array(
+              0 => 'controller.service_arguments',
+            )
+        );
+        $this->app->tag([\Apie\Cms\Controllers\LastActionResultController::class], 'controller.service_arguments');
+        $this->app->singleton(
             \Apie\Cms\Controllers\GetResourceController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\GetResourceController(

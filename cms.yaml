@@ -20,6 +20,13 @@ services:
   
   Apie\Cms\EmptyDashboard:
 
+  Apie\Cms\Controllers\LastActionResultController:
+    arguments:
+      - '@Apie\HtmlBuilders\Factories\ComponentFactory'
+      - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
+      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+    tags: ['controller.service_arguments']
+
   Apie\Cms\Controllers\GetResourceController:
     arguments:
       - '@Apie\Common\ApieFacade'
