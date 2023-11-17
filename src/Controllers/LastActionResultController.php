@@ -2,7 +2,6 @@
 namespace Apie\Cms\Controllers;
 
 use Apie\Common\ContextConstants;
-use Apie\Core\Actions\ActionResponse;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
@@ -31,7 +30,7 @@ class LastActionResultController
         $session = $context->getContext(SessionInterface::class);
         $actionResults = $session->get('_output_results', []);
         $psr17Factory = new Psr17Factory();
-        if (($actionResults[$id] ?? null) instanceof ActionResponse) {
+        if (array_key_exists($id, $actionResults)) {
             $component = $this->componentFactory->createWrapLayout(
                 'Action result',
                 $boundedContextId,
