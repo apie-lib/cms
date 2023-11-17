@@ -1,6 +1,7 @@
 <?php
 namespace Apie\Cms\Controllers;
 
+use Apie\Common\ContextConstants;
 use Apie\Core\Actions\ActionResponse;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
@@ -24,7 +25,7 @@ class LastActionResultController
 
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $context = $this->contextBuilder->createGeneralContext([]);
+        $context = $this->contextBuilder->createFromRequest($request, [ContextConstants::CMS => true]);
         $boundedContextId = new BoundedContextId($request->getAttribute('boundedContextId'));
         $id = $request->getAttribute('id');
         $session = $context->getContext(SessionInterface::class);
