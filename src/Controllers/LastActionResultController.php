@@ -1,16 +1,15 @@
 <?php
 namespace Apie\Cms\Controllers;
 
-use Apie\Common\ContextConstants;
 use Apie\Core\Actions\ActionResponse;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
+use Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory;
 use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class LastActionResultController
@@ -18,7 +17,8 @@ class LastActionResultController
     public function __construct(
         private readonly ComponentFactory $componentFactory,
         private readonly ContextBuilderFactory $contextBuilder,
-        private readonly ComponentRendererInterface $renderer
+        private readonly ComponentRendererInterface $renderer,
+        private readonly FieldDisplayComponentFactory $fieldDisplayComponentFactory
     ) {
     }
 
@@ -35,11 +35,7 @@ class LastActionResultController
                 'Action result',
                 $boundedContextId,
                 $context,
-                $this->componentFactory->createResource(
-                    $actionResults[$id],
-                    new ReflectionClass($request->getAttribute(ContextConstants::RESOURCE_NAME)),
-                    new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
-                )
+                $this->fieldDisplayComponentFactory->createDisplayFor($actionResults[$id], $context)
             );
             $html = $this->renderer->render($component);
             

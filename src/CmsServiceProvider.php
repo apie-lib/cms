@@ -77,7 +77,8 @@ class CmsServiceProvider extends ServiceProvider
                 return new \Apie\Cms\Controllers\LastActionResultController(
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory::class)
                 );
             }
         );
