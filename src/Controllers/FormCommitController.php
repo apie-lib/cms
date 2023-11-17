@@ -72,7 +72,7 @@ class FormCommitController
                     'resource/' . $class->getShortName() . '/' . $output->apieContext->getContext(ContextConstants::RESOURCE_ID)
                 );
             }
-            if (isset($output->result)) {
+            if (isset($output->result) && $output->status !== ActionResponseStatus::DELETED) {
                 if ($output->result instanceof EntityInterface) {
                     $baseClass = $output->result->getId()::getReferenceFor();
                     $redirectUrl = $configuration->getContextUrl(
