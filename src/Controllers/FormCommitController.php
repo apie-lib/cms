@@ -50,7 +50,7 @@ class FormCommitController
      *   - resource/<resource>
      *   - last-action-result/<result-id>
      */
-    private function createResponse(ServerRequestInterface $request, ActionResponse $output): ResponseInterface
+    protected function createResponse(ServerRequestInterface $request, ActionResponse $output): ResponseInterface
     {
         $psr17Factory = new Psr17Factory();
         $configuration = $this->applicationConfiguration->createConfiguration(
