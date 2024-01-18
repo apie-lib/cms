@@ -5,6 +5,8 @@ use Apie\Cms\Controllers\RunGlobalMethodFormController;
 use Apie\Common\ActionDefinitions\ActionDefinitionInterface;
 use Apie\Common\ActionDefinitions\RunGlobalMethodDefinition;
 use Apie\Common\Actions\RunAction;
+use Apie\Common\Concerns\ReadsRouteAttribute;
+use Apie\Core\Attributes\Route;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
@@ -12,6 +14,10 @@ use ReflectionMethod;
 
 class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
 {
+    use ReadsRouteAttribute;
+
+    private const CURRENT_TARGET = Route::CMS;
+
     public static function createFrom(ActionDefinitionInterface $actionDefinition): ?AbstractCmsRouteDefinition
     {
         if ($actionDefinition instanceof RunGlobalMethodDefinition) {
@@ -32,6 +38,10 @@ class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getUrl(): UrlRouteDefinition
     {
+        $route = $this->getRouteAttribute();
+        if ($route) {
+            return new UrlRouteDefinition($route->routeDefinition);
+        }
         $methodName = $this->method->getName();
         if ($methodName === '__invoke') {
             return new UrlRouteDefinition('action/' . $this->method->getDeclaringClass()->getShortName());
