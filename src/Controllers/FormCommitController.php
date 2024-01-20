@@ -62,15 +62,17 @@ class FormCommitController
         $redirectUrl = (string) $request->getUri();
         $session = $output->apieContext->getContext(SessionInterface::class);
         assert($session instanceof SessionInterface);
-        if ($output->getStatusCode() < 300 && $output->apieContext->hasContext(ContextConstants::RESOURCE_NAME)) {
+        if ($output->getStatusCode() < 300) {
             $session->remove('_filled_in');
             $session->remove('_validation_errors');
-            $class = new ReflectionClass($output->apieContext->getContext(ContextConstants::RESOURCE_NAME));
-            $redirectUrl = $configuration->getContextUrl('resource/' . $class->getShortName());
-            if ($output->apieContext->hasContext(ContextConstants::RESOURCE_ID) && $output->status !== ActionResponseStatus::DELETED) {
-                $redirectUrl = $configuration->getContextUrl(
-                    'resource/' . $class->getShortName() . '/' . $output->apieContext->getContext(ContextConstants::RESOURCE_ID)
-                );
+            if ($output->apieContext->hasContext(ContextConstants::RESOURCE_NAME)) {
+                $class = new ReflectionClass($output->apieContext->getContext(ContextConstants::RESOURCE_NAME));
+                $redirectUrl = $configuration->getContextUrl('resource/' . $class->getShortName());
+                if ($output->apieContext->hasContext(ContextConstants::RESOURCE_ID) && $output->status !== ActionResponseStatus::DELETED) {
+                    $redirectUrl = $configuration->getContextUrl(
+                        'resource/' . $class->getShortName() . '/' . $output->apieContext->getContext(ContextConstants::RESOURCE_ID)
+                    );
+                }
             }
             if (isset($output->result) && $output->status !== ActionResponseStatus::DELETED) {
                 if ($output->result instanceof EntityInterface) {
