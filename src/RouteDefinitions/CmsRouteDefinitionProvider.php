@@ -2,11 +2,13 @@
 namespace Apie\Cms\RouteDefinitions;
 
 use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForExistingObjectRouteDefinition;
+use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForGlobalMethodRouteDefinition;
 use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForNewObjectRouteDefinition;
 use Apie\Common\ActionDefinitionProvider;
 use Apie\Common\ActionDefinitions\CreateResourceActionDefinition;
 use Apie\Common\ActionDefinitions\ModifyResourceActionDefinition;
 use Apie\Common\ActionDefinitions\ReplaceResourceActionDefinition;
+use Apie\Common\ActionDefinitions\RunGlobalMethodDefinition;
 use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
 use Apie\Common\RouteDefinitions\ActionHashmap;
 use Apie\Core\BoundedContext\BoundedContext;
@@ -66,9 +68,9 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                 );
                 $routes[$routeDefinition->getOperationId()] = $routeDefinition;
             }
-            if (class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
+            if (false && class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
                 $routeDefinition = new DropdownOptionsForGlobalMethodRouteDefinition(
-                    $actionDefinition->getResourceName(),
+                    $actionDefinition->getMethod()->getDeclaringClass(),
                     $actionDefinition->getBoundedContextId(),
                     $actionDefinition->getMethod(),
                 );
