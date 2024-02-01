@@ -66,6 +66,14 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                 );
                 $routes[$routeDefinition->getOperationId()] = $routeDefinition;
             }
+            if (class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
+                $routeDefinition = new DropdownOptionsForGlobalMethodRouteDefinition(
+                    $actionDefinition->getResourceName(),
+                    $actionDefinition->getBoundedContextId(),
+                    $actionDefinition->getMethod(),
+                );
+                $routes[$routeDefinition->getOperationId()] = $routeDefinition;
+            }
             if (!$found) {
                 $this->logger->debug('No route definition created for ' . get_debug_type($actionDefinition));
             }
