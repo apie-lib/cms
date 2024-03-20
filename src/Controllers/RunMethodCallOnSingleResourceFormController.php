@@ -29,7 +29,7 @@ class RunMethodCallOnSingleResourceFormController
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $context = $this->contextBuilderFactory->createFromRequest($request, [ContextConstants::CMS => true]);
-
+        $context->checkAuthorization();
         $action = $this->apieFacade->createAction($context);
         $method = new ReflectionMethod(
             $context->getContext(ContextConstants::METHOD_CLASS),

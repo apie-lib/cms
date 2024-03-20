@@ -27,7 +27,7 @@ class CreateResourceFormController
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $context = $this->contextBuilderFactory->createFromRequest($request, [ContextConstants::CMS => true]);
-
+        $context->checkAuthorization();
         $action = $this->apieFacade->createAction($context);
         $class = $action::getInputType(
             new ReflectionClass($request->getAttribute(ContextConstants::RESOURCE_NAME))
