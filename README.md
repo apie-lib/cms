@@ -14,4 +14,7 @@ This package is part of the [Apie](https://github.com/apie-lib) library.
 The code is maintained in a monorepo, so PR's need to be sent to the [monorepo](https://github.com/apie-lib/apie-lib-monorepo/pulls)
 
 ## Documentation
-This package is used internally in Apie or no documentation is available right now
+Apie/cms is the package used to create cms actions. It uses apie/html-builders to create component classes and uses regular backend controllers to render the pages. A layout package is required to make it work in an application.
+
+Right now we only have apie/cms-layout-graphite
+More layouts will be added in a later stadium.
