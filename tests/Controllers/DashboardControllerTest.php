@@ -3,6 +3,7 @@ namespace Apie\Tests\Cms;
 
 use Apie\Cms\Controllers\DashboardController;
 use Apie\Common\ActionDefinitionProvider;
+use Apie\Core\Context\ApieContext;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\Fixtures\BoundedContextFactory;
 use Apie\HtmlBuilders\Components\Layout;
@@ -36,7 +37,7 @@ class DashboardControllerTest extends TestCase
     public function it_generates_html()
     {
         $renderer = $this->prophesize(ComponentRendererInterface::class);
-        $renderer->render(Argument::type(Layout::class))
+        $renderer->render(Argument::type(Layout::class), Argument::type(ApieContext::class))
             ->shouldBeCalled()
             ->willReturn('<html></html>');
         $testItem = new DashboardController(

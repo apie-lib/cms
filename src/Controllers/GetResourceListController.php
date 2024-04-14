@@ -33,7 +33,7 @@ class GetResourceListController
             new ReflectionClass($request->getAttribute(ContextConstants::RESOURCE_NAME)),
             new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
         );
-        $html = $this->renderer->render($component);
+        $html = $this->renderer->render($component, $data->apieContext);
         $psr17Factory = new Psr17Factory();
         return $psr17Factory->createResponse(200)
             ->withBody($psr17Factory->createStream($html))

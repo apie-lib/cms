@@ -40,7 +40,7 @@ class ModifyResourceFormController
             $context,
             $layout
         );
-        $html = $this->renderer->render($component);
+        $html = $this->renderer->render($component, $context);
         $psr17Factory = new Psr17Factory();
         return $psr17Factory->createResponse(200)
             ->withBody($psr17Factory->createStream($html))

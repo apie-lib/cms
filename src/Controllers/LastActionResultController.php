@@ -37,7 +37,7 @@ class LastActionResultController
                 $context,
                 $this->fieldDisplayComponentFactory->createDisplayFor($actionResults[$id], $context)
             );
-            $html = $this->renderer->render($component);
+            $html = $this->renderer->render($component, $context);
             
             return $psr17Factory->createResponse(200)
                 ->withBody($psr17Factory->createStream($html))
