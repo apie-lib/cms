@@ -2,6 +2,7 @@ services:
   Apie\Cms\Services\ResponseFactory:
     arguments:
       - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Common\Events\ResponseDispatcher'
 
   Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider:
     arguments:

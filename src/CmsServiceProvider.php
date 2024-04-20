@@ -18,7 +18,8 @@ class CmsServiceProvider extends ServiceProvider
             \Apie\Cms\Services\ResponseFactory::class,
             function ($app) {
                 return new \Apie\Cms\Services\ResponseFactory(
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Common\Events\ResponseDispatcher::class)
                 );
             }
         );

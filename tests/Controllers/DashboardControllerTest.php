@@ -4,6 +4,7 @@ namespace Apie\Tests\Cms;
 use Apie\Cms\Controllers\DashboardController;
 use Apie\Cms\Services\ResponseFactory;
 use Apie\Common\ActionDefinitionProvider;
+use Apie\Common\Events\ResponseDispatcher;
 use Apie\Core\Context\ApieContext;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\Fixtures\BoundedContextFactory;
@@ -19,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class DashboardControllerTest extends TestCase
 {
@@ -50,7 +52,10 @@ class DashboardControllerTest extends TestCase
                 new ResourceActionFactory(new ActionDefinitionProvider())
             ),
             new ContextBuilderFactory(),
-            new ResponseFactory($renderer->reveal())
+            new ResponseFactory(
+                $renderer->reveal(),
+                new ResponseDispatcher(new EventDispatcher())
+            )
         );
         $request = $this->givenAGetRequest('/');
         $response = $testItem($request);
