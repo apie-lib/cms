@@ -2,13 +2,12 @@
 namespace Apie\Cms\Controllers;
 
 use Apie\Cms\LayoutPicker;
+use Apie\Cms\Services\ResponseFactory;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
-use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
@@ -19,7 +18,7 @@ class CreateResourceFormController
         private readonly ApieFacade $apieFacade,
         private readonly ComponentFactory $componentFactory,
         private readonly ContextBuilderFactory $contextBuilderFactory,
-        private readonly ComponentRendererInterface $renderer,
+        private readonly ResponseFactory $responseFactory,
         private readonly LayoutPicker $layoutPicker
     ) {
     }
@@ -39,10 +38,6 @@ class CreateResourceFormController
             $context,
             $this->layoutPicker->pickLayout($request)
         );
-        $html = $this->renderer->render($component, $context);
-        $psr17Factory = new Psr17Factory();
-        return $psr17Factory->createResponse(200)
-            ->withBody($psr17Factory->createStream($html))
-            ->withHeader('Content-Type', 'text/html');
+        return $this->responseFactory->createComponentPageRender($component, $context);
     }
 }

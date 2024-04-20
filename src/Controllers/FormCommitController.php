@@ -1,6 +1,7 @@
 <?php
 namespace Apie\Cms\Controllers;
 
+use Apie\Cms\Services\ResponseFactory;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\Actions\ActionResponse;
@@ -24,7 +25,8 @@ class FormCommitController
         private readonly ContextBuilderFactory $contextBuilderFactory,
         private readonly ApieFacade $apieFacade,
         private readonly ApplicationConfiguration $applicationConfiguration,
-        private readonly BoundedContextHashmap $boundedContextHashmap
+        private readonly BoundedContextHashmap $boundedContextHashmap,
+        private readonly ResponseFactory $responseFactory,
     ) {
     }
 
@@ -104,6 +106,6 @@ class FormCommitController
             }
         }
 
-        return $psr17Factory->createResponse(301)->withHeader('Location', $redirectUrl);
+        return $this->responseFactory->createRedirect($redirectUrl);
     }
 }

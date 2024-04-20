@@ -1,13 +1,12 @@
 <?php
 namespace Apie\Cms\Controllers;
 
+use Apie\Cms\Services\ResponseFactory;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
-use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
@@ -18,7 +17,7 @@ class GetResourceListController
         private readonly ApieFacade $apieFacade,
         private readonly ComponentFactory $componentFactory,
         private readonly ContextBuilderFactory $contextBuilderFactory,
-        private readonly ComponentRendererInterface $renderer
+        private readonly ResponseFactory $responseFactory
     ) {
     }
 
@@ -33,10 +32,7 @@ class GetResourceListController
             new ReflectionClass($request->getAttribute(ContextConstants::RESOURCE_NAME)),
             new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
         );
-        $html = $this->renderer->render($component, $data->apieContext);
-        $psr17Factory = new Psr17Factory();
-        return $psr17Factory->createResponse(200)
-            ->withBody($psr17Factory->createStream($html))
-            ->withHeader('Content-Type', 'text/html');
+
+        return $this->responseFactory->createComponentPageRender($component, $data->apieContext);
     }
 }

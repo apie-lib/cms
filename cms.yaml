@@ -1,4 +1,8 @@
 services:
+  Apie\Cms\Services\ResponseFactory:
+    arguments:
+      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+
   Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider:
     arguments:
       - '@Apie\Common\ActionDefinitionProvider'
@@ -9,7 +13,7 @@ services:
     arguments:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@apie.cms.dashboard_content'
     tags: ['controller.service_arguments']
 
@@ -24,7 +28,7 @@ services:
     arguments:
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory'
     tags: ['controller.service_arguments']
 
@@ -33,7 +37,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
     tags: ['controller.service_arguments']
 
   Apie\Cms\Controllers\GetResourceListController:
@@ -41,7 +45,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
     tags: ['controller.service_arguments']
 
   Apie\Cms\Controllers\RunGlobalMethodFormController:
@@ -49,7 +53,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
@@ -58,7 +62,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
@@ -67,7 +71,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
@@ -76,7 +80,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
@@ -85,7 +89,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Factories\ComponentFactory'
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
-      - '@Apie\HtmlBuilders\Interfaces\ComponentRendererInterface'
+      - '@Apie\Cms\Services\ResponseFactory'
       - '@Apie\Cms\LayoutPicker'
     tags: ['controller.service_arguments']
 
@@ -95,6 +99,7 @@ services:
       - '@Apie\Common\ApieFacade'
       - '@Apie\HtmlBuilders\Configuration\ApplicationConfiguration'
       - '@Apie\Core\BoundedContext\BoundedContextHashmap'
+      - '@Apie\Cms\Services\ResponseFactory'
     tags: ['controller.service_arguments']
 
   cms.layout.graphite_design_system:

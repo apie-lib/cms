@@ -2,6 +2,7 @@
 namespace Apie\Tests\Cms;
 
 use Apie\Cms\Controllers\DashboardController;
+use Apie\Cms\Services\ResponseFactory;
 use Apie\Common\ActionDefinitionProvider;
 use Apie\Core\Context\ApieContext;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
@@ -49,7 +50,7 @@ class DashboardControllerTest extends TestCase
                 new ResourceActionFactory(new ActionDefinitionProvider())
             ),
             new ContextBuilderFactory(),
-            $renderer->reveal()
+            new ResponseFactory($renderer->reveal())
         );
         $request = $this->givenAGetRequest('/');
         $response = $testItem($request);

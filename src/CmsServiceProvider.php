@@ -15,6 +15,14 @@ class CmsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(
+            \Apie\Cms\Services\ResponseFactory::class,
+            function ($app) {
+                return new \Apie\Cms\Services\ResponseFactory(
+                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                );
+            }
+        );
+        $this->app->singleton(
             \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class,
             function ($app) {
                 return new \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider(
@@ -40,7 +48,7 @@ class CmsServiceProvider extends ServiceProvider
                 return new \Apie\Cms\Controllers\DashboardController(
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make('apie.cms.dashboard_content')
                 );
             }
@@ -77,7 +85,7 @@ class CmsServiceProvider extends ServiceProvider
                 return new \Apie\Cms\Controllers\LastActionResultController(
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make(\Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory::class)
                 );
             }
@@ -97,7 +105,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class)
                 );
             }
         );
@@ -116,7 +124,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class)
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class)
                 );
             }
         );
@@ -135,7 +143,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
@@ -155,7 +163,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
@@ -175,7 +183,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
@@ -195,7 +203,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
@@ -215,7 +223,7 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Factories\ComponentFactory::class),
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
-                    $app->make(\Apie\HtmlBuilders\Interfaces\ComponentRendererInterface::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class),
                     $app->make(\Apie\Cms\LayoutPicker::class)
                 );
             }
@@ -235,7 +243,8 @@ class CmsServiceProvider extends ServiceProvider
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
                     $app->make(\Apie\Common\ApieFacade::class),
                     $app->make(\Apie\HtmlBuilders\Configuration\ApplicationConfiguration::class),
-                    $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class)
+                    $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class),
+                    $app->make(\Apie\Cms\Services\ResponseFactory::class)
                 );
             }
         );

@@ -1,13 +1,12 @@
 <?php
 namespace Apie\Cms\Controllers;
 
+use Apie\Cms\Services\ResponseFactory;
 use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
 use Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory;
-use Apie\HtmlBuilders\Interfaces\ComponentRendererInterface;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -17,7 +16,7 @@ class LastActionResultController
     public function __construct(
         private readonly ComponentFactory $componentFactory,
         private readonly ContextBuilderFactory $contextBuilder,
-        private readonly ComponentRendererInterface $renderer,
+        private readonly ResponseFactory $responseFactory,
         private readonly FieldDisplayComponentFactory $fieldDisplayComponentFactory
     ) {
     }
@@ -29,7 +28,6 @@ class LastActionResultController
         $id = $request->getAttribute('id');
         $session = $context->getContext(SessionInterface::class);
         $actionResults = $session->get('_output_results', []);
-        $psr17Factory = new Psr17Factory();
         if (array_key_exists($id, $actionResults)) {
             $component = $this->componentFactory->createWrapLayout(
                 'Action result',
@@ -37,14 +35,9 @@ class LastActionResultController
                 $context,
                 $this->fieldDisplayComponentFactory->createDisplayFor($actionResults[$id], $context)
             );
-            $html = $this->renderer->render($component, $context);
-            
-            return $psr17Factory->createResponse(200)
-                ->withBody($psr17Factory->createStream($html))
-                ->withHeader('Content-Type', 'text/html');
+            return $this->responseFactory->createComponentPageRender($component, $context);
         }
         $redirectUrl = (string) $request->getUri() . '/../../';
-        return $psr17Factory->createResponse(301)
-            ->withHeader('location', $redirectUrl);
+        return $this->responseFactory->createRedirect($redirectUrl);
     }
 }
