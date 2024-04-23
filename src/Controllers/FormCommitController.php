@@ -13,7 +13,6 @@ use Apie\Core\Entities\EntityInterface;
 use Apie\Core\Identifiers\UuidV4;
 use Apie\HtmlBuilders\Configuration\ApplicationConfiguration;
 use Apie\Serializer\Exceptions\ValidationException;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
@@ -22,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class FormCommitController
 {
     public function __construct(
-        private readonly ContextBuilderFactory $contextBuilderFactory,
+        protected readonly ContextBuilderFactory $contextBuilderFactory,
         private readonly ApieFacade $apieFacade,
         private readonly ApplicationConfiguration $applicationConfiguration,
         private readonly BoundedContextHashmap $boundedContextHashmap,
@@ -54,7 +53,6 @@ class FormCommitController
      */
     protected function createResponse(ServerRequestInterface $request, ActionResponse $output): ResponseInterface
     {
-        $psr17Factory = new Psr17Factory();
         $configuration = $this->applicationConfiguration->createConfiguration(
             $output->apieContext,
             $this->boundedContextHashmap,
