@@ -2,6 +2,7 @@
 namespace Apie\Cms\Controllers;
 
 use Apie\Cms\Services\ResponseFactory;
+use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
@@ -21,7 +22,7 @@ class DashboardController
 
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $context = $this->contextBuilder->createGeneralContext([]);
+        $context = $this->contextBuilder->createFromRequest($request, [ContextConstants::CMS => true]);
         $boundedContextId = new BoundedContextId($request->getAttribute('boundedContextId'));
         $component = $this->componentFactory->createWrapLayout(
             'Dashboard',
