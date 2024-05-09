@@ -32,10 +32,8 @@ class FormCommitController
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $context = $this->contextBuilderFactory->createFromRequest($request, [ContextConstants::CMS => true]);
-
         $action = $this->apieFacade->createAction($context);
         $data = ($action)($context, $context->getContext(ContextConstants::RAW_CONTENTS));
-
         return $this->createResponse($request, $data);
     }
 
@@ -104,6 +102,6 @@ class FormCommitController
             }
         }
 
-        return $this->responseFactory->createRedirect($redirectUrl);
+        return $this->responseFactory->createRedirect($redirectUrl, $output->apieContext);
     }
 }

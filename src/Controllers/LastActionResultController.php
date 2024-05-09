@@ -38,6 +38,6 @@ class LastActionResultController
             return $this->responseFactory->createComponentPageRender($component, $context);
         }
         $redirectUrl = (string) $request->getUri() . '/../../';
-        return $this->responseFactory->createRedirect($redirectUrl);
+        return $this->responseFactory->createRedirect($redirectUrl, $context);
     }
 }

@@ -19,9 +19,13 @@ final class ResponseFactory
         $this->psr17Factory = new Psr17Factory();
     }
 
-    public function createRedirect(string $redirectUrl): ResponseInterface
+    public function createRedirect(string $redirectUrl, ApieContext $context): ResponseInterface
     {
-        return $this->psr17Factory->createResponse(301)->withHeader('Location', $redirectUrl);
+        $response = $this->psr17Factory->createResponse(301)->withHeader('Location', $redirectUrl);
+        return $this->responseDispatcher->triggerResponseCreated(
+            $response,
+            $context
+        );
     }
 
     public function createComponentPageRender(ComponentInterface $component, ApieContext $context): ResponseInterface
