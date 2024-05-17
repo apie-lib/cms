@@ -2,9 +2,9 @@
 namespace Apie\Cms\Controllers;
 
 use Apie\Cms\Services\ResponseFactory;
-use Apie\Common\ContextConstants;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
+use Apie\Core\ContextConstants;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
 use Apie\HtmlBuilders\Factories\FieldDisplayComponentFactory;
 use Psr\Http\Message\ResponseInterface;
