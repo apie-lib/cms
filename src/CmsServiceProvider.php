@@ -263,9 +263,7 @@ class CmsServiceProvider extends ServiceProvider
                 return \Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout::createRenderer(
                 
                 );
-                
             }
         );
-        
     }
 }

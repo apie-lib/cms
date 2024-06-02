@@ -32,7 +32,7 @@
     "illuminate/support": "*",
     "phpunit/phpunit": "^9.5",
     "phpspec/prophecy-phpunit": "^2.0",
-    "symfony/event-dispatcher": "6.*"
+    "symfony/event-dispatcher": "^6.4"
   },
   "suggest": {
     "apie/cms-api-dropdown-option": "for having dropdowns for relations"
