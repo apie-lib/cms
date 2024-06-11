@@ -6,7 +6,7 @@
 
 
 
- [![Latest Stable Version](http://poser.pugx.org/apie/cms/v)](https://packagist.org/packages/apie/cms) [![Total Downloads](http://poser.pugx.org/apie/cms/downloads)](https://packagist.org/packages/apie/cms) [![Latest Unstable Version](http://poser.pugx.org/apie/cms/v/unstable)](https://packagist.org/packages/apie/cms) [![License](http://poser.pugx.org/apie/cms/license)](https://packagist.org/packages/apie/cms) [![PHP Version Require](http://poser.pugx.org/apie/cms/require/php)](https://packagist.org/packages/apie/cms) [![PHP Composer](https://apie-lib.github.io/projectCoverage/coverage-cms.svg)](https://apie-lib.github.io/projectCoverage/app/packages/cms/index.html)  
+ [![Latest Stable Version](http://poser.pugx.org/apie/cms/v)](https://packagist.org/packages/apie/cms) [![Total Downloads](http://poser.pugx.org/apie/cms/downloads)](https://packagist.org/packages/apie/cms) [![Latest Unstable Version](http://poser.pugx.org/apie/cms/v/unstable)](https://packagist.org/packages/apie/cms) [![License](http://poser.pugx.org/apie/cms/license)](https://packagist.org/packages/apie/cms) [![PHP Composer](https://apie-lib.github.io/projectCoverage/coverage-cms.svg)](https://apie-lib.github.io/projectCoverage/app/packages/cms/index.html)  
 
 [![PHP Composer](https://github.com/apie-lib/cms/actions/workflows/php.yml/badge.svg?event=push)](https://github.com/apie-lib/cms/actions/workflows/php.yml)
 
