@@ -51,6 +51,9 @@ class FormCommitController
      */
     protected function createResponse(ServerRequestInterface $request, ActionResponse $output): ResponseInterface
     {
+        if ($output->result instanceof ResponseInterface) {
+            return $output->result;
+        }
         $configuration = $this->applicationConfiguration->createConfiguration(
             $output->apieContext,
             $this->boundedContextHashmap,

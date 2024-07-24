@@ -30,6 +30,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         RunGlobalMethodFormRouteDefinition::class,
         RunMethodCallOnSingleResourceCommitRouteDefinition::class,
         RunMethodCallOnSingleResourceFormRouteDefinition::class,
+        StreamMethodCallOnSingleResourceRouteDefinition::class,
     ];
 
     public function __construct(
