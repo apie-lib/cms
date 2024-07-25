@@ -7,7 +7,6 @@ use Apie\Common\ActionDefinitions\StreamGetterActionDefinition;
 use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Common\Actions\StreamItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContextId;
-use Apie\Core\ContextConstants;
 use Apie\Core\Entities\EntityInterface;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
