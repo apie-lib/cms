@@ -104,7 +104,7 @@ services:
     tags: ['controller.service_arguments']
 
   cms.layout.graphite_design_system:
-    class: Apie\CmsLayoutGraphite\TwigRenderer
+    class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
     factory:
-      -  Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout
+      -  Apie\TwigTemplateLayoutRenderer\GraphiteDesignSystemLayout
       - 'createRenderer'
