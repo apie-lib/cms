@@ -266,6 +266,15 @@ class CmsServiceProvider extends ServiceProvider
                 
             }
         );
+        $this->app->singleton(
+            'cms.layout.ionic_design_system',
+            function ($app) {
+                return \Apie\CmsLayoutIonic\IonicDesignSystemLayout::createRenderer(
+                
+                );
+                
+            }
+        );
         
     }
 }

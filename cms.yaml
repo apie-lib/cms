@@ -106,5 +106,11 @@ services:
   cms.layout.graphite_design_system:
     class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
     factory:
-      -  Apie\TwigTemplateLayoutRenderer\GraphiteDesignSystemLayout
+      -  Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout
+      - 'createRenderer'
+
+  cms.layout.ionic_design_system:
+    class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
+    factory:
+      -  Apie\CmsLayoutIonic\IonicDesignSystemLayout
       - 'createRenderer'
