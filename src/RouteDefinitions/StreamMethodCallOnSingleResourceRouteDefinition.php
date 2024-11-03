@@ -57,7 +57,7 @@ class StreamMethodCallOnSingleResourceRouteDefinition extends AbstractCmsRouteDe
 
     public static function createFrom(ActionDefinitionInterface $actionDefinition): ?AbstractCmsRouteDefinition
     {
-        if ($actionDefinition instanceof StreamGetterActionDefinition) {
+        if ($actionDefinition instanceof StreamGetterActionDefinition && $actionDefinition->getMethod() instanceof ReflectionMethod) {
             return new self($actionDefinition->getResourceName(), $actionDefinition->getMethod(), $actionDefinition->getBoundedContextId());
         }
         return null;

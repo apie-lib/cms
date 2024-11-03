@@ -52,7 +52,6 @@ class ModifyResourceFormController
             );
         } catch (InvalidStringForValueObjectException|EntityNotFoundException $error) {
             IntegrationTestLogger::logException($error);
-            // return ActionResponse::createClientError($this->apieFacade, $context, $error);
         }
         if (isset($resource)) {
             $context = $context->withContext(ContextConstants::RESOURCE, $resource);
