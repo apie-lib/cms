@@ -275,6 +275,15 @@ class CmsServiceProvider extends ServiceProvider
                 
             }
         );
+        $this->app->singleton(
+            'cms.layout.ugly_design_system',
+            function ($app) {
+                return \Apie\CmsLayoutUgly\UglyDesignSystemLayout::createRenderer(
+                
+                );
+                
+            }
+        );
         
     }
 }
