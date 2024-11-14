@@ -48,7 +48,7 @@ class DashboardControllerTest extends TestCase
                 new ApplicationConfiguration(),
                 BoundedContextFactory::createHashmap(),
                 FormComponentFactory::create(),
-                FieldDisplayComponentFactory::create(),
+                FieldDisplayComponentFactory::create([]),
                 new ResourceActionFactory(new ActionDefinitionProvider())
             ),
             new ContextBuilderFactory(),
