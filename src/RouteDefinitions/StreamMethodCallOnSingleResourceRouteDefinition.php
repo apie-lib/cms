@@ -3,32 +3,30 @@ namespace Apie\Cms\RouteDefinitions;
 
 use Apie\Cms\Controllers\FormCommitController;
 use Apie\Common\ActionDefinitions\ActionDefinitionInterface;
-use Apie\Common\ActionDefinitions\StreamGetterActionDefinition;
-use Apie\Common\Actions\RunItemMethodAction;
+use Apie\Common\ActionDefinitions\DownloadFilesActionDefinition;
 use Apie\Common\Actions\StreamItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Entities\EntityInterface;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
 use ReflectionClass;
-use ReflectionMethod;
 
 /**
- * Route definition for running method on single resource to stream a resource
+ * Route definition for downloading a file.
  */
 class StreamMethodCallOnSingleResourceRouteDefinition extends AbstractCmsRouteDefinition
 {
     /**
      * @param ReflectionClass<EntityInterface> $className
      */
-    public function __construct(ReflectionClass $className, ReflectionMethod $method, BoundedContextId $boundedContextId)
+    public function __construct(ReflectionClass $className, BoundedContextId $boundedContextId)
     {
-        parent::__construct($className, $boundedContextId, $method);
+        parent::__construct($className, $boundedContextId);
     }
 
     public function getOperationId(): string
     {
-        return 'form-stream-single-' . $this->class->getShortName() . '-run-' . $this->method->name;
+        return 'form-stream-single-' . $this->class->getShortName() . '-run-download';
     }
     
     public function getMethod(): RequestMethod
@@ -38,11 +36,7 @@ class StreamMethodCallOnSingleResourceRouteDefinition extends AbstractCmsRouteDe
 
     public function getUrl(): UrlRouteDefinition
     {
-        $methodName = RunItemMethodAction::getDisplayNameForMethod($this->method);
-        if ($methodName === '__invoke') {
-            return new UrlRouteDefinition('/resource/action/' . $this->class->getShortName() . '/{id}');
-        }
-        return new UrlRouteDefinition('/resource/action/' . $this->class->getShortName() . '/{id}/' . $methodName);
+        return new UrlRouteDefinition('/resource/action/' . $this->class->getShortName() . '/{id}/download/{properties}');
     }
 
     public function getController(): string
@@ -57,8 +51,8 @@ class StreamMethodCallOnSingleResourceRouteDefinition extends AbstractCmsRouteDe
 
     public static function createFrom(ActionDefinitionInterface $actionDefinition): ?AbstractCmsRouteDefinition
     {
-        if ($actionDefinition instanceof StreamGetterActionDefinition && $actionDefinition->getMethod() instanceof ReflectionMethod) {
-            return new self($actionDefinition->getResourceName(), $actionDefinition->getMethod(), $actionDefinition->getBoundedContextId());
+        if ($actionDefinition instanceof DownloadFilesActionDefinition) {
+            return new self($actionDefinition->getResourceName(), $actionDefinition->getBoundedContextId());
         }
         return null;
     }
