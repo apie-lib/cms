@@ -70,8 +70,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                 );
                 $routes[$routeDefinition->getOperationId()] = $routeDefinition;
             }
-            // @phpstan-ignore-next-line
-            if (false && class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
+            if (class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
                 $routeDefinition = new DropdownOptionsForGlobalMethodRouteDefinition(
                     $actionDefinition->getMethod()->getDeclaringClass(),
                     $actionDefinition->getBoundedContextId(),
