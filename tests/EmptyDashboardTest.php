@@ -6,9 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class EmptyDashboardTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_converts_into_an_empty_string()
     {
         $testItem = new EmptyDashboard();

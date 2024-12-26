@@ -34,9 +34,7 @@ class DashboardControllerTest extends TestCase
             ->withAttribute('boundedContextId', 'default');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_generates_html()
     {
         $renderer = $this->prophesize(ComponentRendererInterface::class);
