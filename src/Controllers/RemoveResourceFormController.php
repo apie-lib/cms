@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 
-class CreateResourceFormController
+class RemoveResourceFormController
 {
     public function __construct(
         private readonly ApieFacade $apieFacade,
@@ -31,8 +31,8 @@ class CreateResourceFormController
         $class = $action::getInputType(
             new ReflectionClass($request->getAttribute(ContextConstants::RESOURCE_NAME))
         );
-        $component = $this->componentFactory->createFormForResourceCreation(
-            'Create ' . $class->getShortName(),
+        $component = $this->componentFactory->createFormForResourceRemoval(
+            'Remove ' . $class->getShortName(),
             $class,
             new BoundedContextId($request->getAttribute(ContextConstants::BOUNDED_CONTEXT_ID)),
             $context,

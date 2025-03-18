@@ -1,7 +1,7 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\RunGlobalMethodFormController;
+use Apie\Cms\Controllers\FormCommitController;
 use Apie\Common\ActionDefinitions\ActionDefinitionInterface;
 use Apie\Common\ActionDefinitions\RunGlobalMethodDefinition;
 use Apie\Common\Actions\RunAction;
@@ -12,7 +12,7 @@ use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
 use ReflectionMethod;
 
-class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
+class RunGlobalMethodCommitRouteDefinition extends AbstractCmsRouteDefinition
 {
     use ReadsRouteAttribute;
 
@@ -33,7 +33,7 @@ class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getMethod(): RequestMethod
     {
-        return RequestMethod::GET;
+        return RequestMethod::POST;
     }
 
     public function getUrl(): UrlRouteDefinition
@@ -51,7 +51,7 @@ class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getController(): string
     {
-        return RunGlobalMethodFormController::class;
+        return FormCommitController::class;
     }
 
     public function getAction(): string
@@ -63,6 +63,6 @@ class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
     {
         $methodName = $this->method->getName();
         $suffix = $methodName === '__invoke' ? '' : ('-' . $methodName);
-        return 'form-call-method-' . $this->method->getDeclaringClass()->getShortName() . $suffix;
+        return 'call-method-commit-' . $this->method->getDeclaringClass()->getShortName() . $suffix;
     }
 }

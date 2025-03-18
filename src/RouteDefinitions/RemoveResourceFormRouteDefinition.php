@@ -1,25 +1,20 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\CreateResourceFormController;
+use Apie\Cms\Controllers\RemoveResourceFormController;
 use Apie\Common\ActionDefinitions\ActionDefinitionInterface;
-use Apie\Common\ActionDefinitions\CreateResourceActionDefinition;
-use Apie\Common\ActionDefinitions\ReplaceResourceActionDefinition;
-use Apie\Common\Actions\CreateObjectAction;
+use Apie\Common\ActionDefinitions\RemoveResourceActionDefinition;
+use Apie\Common\Actions\RemoveObjectAction;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
 use ReflectionClass;
 
-class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
+class RemoveResourceFormRouteDefinition extends AbstractCmsRouteDefinition
 {
     public static function createFrom(ActionDefinitionInterface $actionDefinition): ?AbstractCmsRouteDefinition
     {
-        if ($actionDefinition instanceof CreateResourceActionDefinition) {
-            return new self($actionDefinition->getResourceName(), $actionDefinition->getBoundedContextId());
-        }
-        // TODO: should become PUT
-        if ($actionDefinition instanceof ReplaceResourceActionDefinition) {
+        if ($actionDefinition instanceof RemoveResourceActionDefinition) {
             return new self($actionDefinition->getResourceName(), $actionDefinition->getBoundedContextId());
         }
         return null;
@@ -37,21 +32,21 @@ class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getUrl(): UrlRouteDefinition
     {
-        return new UrlRouteDefinition('/resource/create/' . $this->class->getShortName());
+        return new UrlRouteDefinition('/resource/delete/' . $this->class->getShortName() . '/{id}');
     }
 
     public function getController(): string
     {
-        return CreateResourceFormController::class;
+        return RemoveResourceFormController::class;
     }
 
     public function getAction(): string
     {
-        return CreateObjectAction::class;
+        return RemoveObjectAction::class;
     }
 
     public function getOperationId(): string
     {
-        return 'create-resource-form-' . $this->class->getShortName();
+        return 'delete-resource-form-' . $this->class->getShortName();
     }
 }

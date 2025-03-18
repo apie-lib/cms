@@ -1,7 +1,7 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\DashboardController;
+use Apie\Cms\Controllers\LastActionResultController;
 use Apie\Common\Actions\GetListAction;
 use Apie\Common\Enums\UrlPrefix;
 use Apie\Common\Interfaces\HasRouteDefinition;
@@ -11,7 +11,7 @@ use Apie\Core\ContextConstants;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
 
-class DashboardRouteDefinition implements HasRouteDefinition
+class LastActionResultRouteDefinition implements HasRouteDefinition
 {
     public function __construct(private readonly BoundedContextId $id)
     {
@@ -24,14 +24,14 @@ class DashboardRouteDefinition implements HasRouteDefinition
 
     public function getUrl(): UrlRouteDefinition
     {
-        return new UrlRouteDefinition('/');
+        return new UrlRouteDefinition('/last-action-result/{id}');
     }
     /**
      * @return class-string<object>
      */
     public function getController(): string
     {
-        return DashboardController::class;
+        return LastActionResultController::class;
     }
     /**
      * @return array<string, mixed>
@@ -44,7 +44,7 @@ class DashboardRouteDefinition implements HasRouteDefinition
     }
     public function getOperationId(): string
     {
-        return 'cms.dashboard';
+        return 'cms.last-action-result';
     }
 
     public function getAction(): string

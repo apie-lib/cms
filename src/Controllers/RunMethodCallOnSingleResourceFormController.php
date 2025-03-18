@@ -7,13 +7,14 @@ use Apie\Common\ApieFacade;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\Core\ContextConstants;
+use Apie\Core\IdentifierUtils;
 use Apie\HtmlBuilders\Factories\ComponentFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionMethod;
 
-class RunGlobalMethodFormController
+class RunMethodCallOnSingleResourceFormController
 {
     public function __construct(
         private readonly ApieFacade $apieFacade,
@@ -30,14 +31,21 @@ class RunGlobalMethodFormController
         $context->checkAuthorization();
         $action = $this->apieFacade->createAction($context);
         $method = new ReflectionMethod(
-            $context->getContext(ContextConstants::SERVICE_CLASS),
+            $context->getContext(ContextConstants::METHOD_CLASS),
             $context->getContext(ContextConstants::METHOD_NAME)
         );
         $method = $action::getInputType(
-            new ReflectionClass($request->getAttribute(ContextConstants::SERVICE_CLASS)),
+            new ReflectionClass($request->getAttribute(ContextConstants::METHOD_CLASS)),
             $method
         );
         assert($method instanceof ReflectionMethod);
+        $id = $context->getContext(ContextConstants::RESOURCE_ID);
+        $resource = $this->apieFacade->find(
+            IdentifierUtils::entityClassToIdentifier(new ReflectionClass($context->getContext(ContextConstants::RESOURCE_NAME)))
+                ->newInstance($id),
+            new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
+        );
+        $context = $context->withContext(ContextConstants::RESOURCE, $resource);
         $layout = $this->layoutPicker->pickLayout($request);
         $component = $this->componentFactory->createFormForMethod(
             $request->getAttribute(ContextConstants::METHOD_NAME) ? : 'Form',

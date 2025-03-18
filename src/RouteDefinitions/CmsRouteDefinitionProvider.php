@@ -1,42 +1,88 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Common\ContextConstants;
+use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForExistingObjectRouteDefinition;
+use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForGlobalMethodRouteDefinition;
+use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForNewObjectRouteDefinition;
+use Apie\Common\ActionDefinitionProvider;
+use Apie\Common\ActionDefinitions\CreateResourceActionDefinition;
+use Apie\Common\ActionDefinitions\ModifyResourceActionDefinition;
+use Apie\Common\ActionDefinitions\ReplaceResourceActionDefinition;
+use Apie\Common\ActionDefinitions\RunGlobalMethodDefinition;
 use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
 use Apie\Common\RouteDefinitions\ActionHashmap;
 use Apie\Core\BoundedContext\BoundedContext;
 use Apie\Core\Context\ApieContext;
-use Apie\Core\Enums\RequestMethod;
+use Psr\Log\LoggerInterface;
 
 class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
 {
+    private const CLASSES = [
+        CreateResourceFormRouteDefinition::class,
+        CreateResourceCommitRouteDefinition::class,
+        DisplayResourceRouteDefinition::class,
+        DisplayResourceOverviewRouteDefinition::class,
+        ModifyResourceFormRouteDefinition::class,
+        ModifyResourceCommitRouteDefinition::class,
+        RemoveResourceFormRouteDefinition::class,
+        RemoveResourceFormCommitRouteDefinition::class,
+        RunGlobalMethodCommitRouteDefinition::class,
+        RunGlobalMethodFormRouteDefinition::class,
+        RunMethodCallOnSingleResourceCommitRouteDefinition::class,
+        RunMethodCallOnSingleResourceFormRouteDefinition::class,
+        StreamMethodCallOnSingleResourceRouteDefinition::class,
+    ];
+
+    public function __construct(
+        private ActionDefinitionProvider $actionDefinitionProvider,
+        private LoggerInterface $logger,
+    ) {
+    }
+
     public function getActionsForBoundedContext(BoundedContext $boundedContext, ApieContext $apieContext): ActionHashmap
     {
-        $actions = [];
+        $routes = [];
         $definition = new DashboardRouteDefinition($boundedContext->getId());
-        $actions[$definition->getOperationId()] = $definition;
-
-        $postContext = $apieContext->withContext(RequestMethod::class, RequestMethod::POST)
-            ->withContext(ContextConstants::CREATE_OBJECT, true)
-            ->registerInstance($boundedContext);
-        foreach ($boundedContext->resources->filterOnApieContext($postContext) as $resource) {
-            $definition = new CreateResourceFormRouteDefinition($resource, $boundedContext->getId());
-            $actions[$definition->getOperationId()] = $definition;
+        $routes[$definition->getOperationId()] = $definition;
+        $definition = new LastActionResultRouteDefinition($boundedContext->getId());
+        $routes[$definition->getOperationId()] = $definition;
+        foreach ($this->actionDefinitionProvider->provideActionDefinitions($boundedContext, $apieContext) as $actionDefinition) {
+            $found = false;
+            foreach (self::CLASSES as $routeDefinitionClass) {
+                $routeDefinition = $routeDefinitionClass::createFrom($actionDefinition);
+                if ($routeDefinition) {
+                    $routes[$routeDefinition->getOperationId()] = $routeDefinition;
+                    $found = true;
+                }
+            }
+            if (class_exists(DropdownOptionsForNewObjectRouteDefinition::class) &&
+                ($actionDefinition instanceof CreateResourceActionDefinition || $actionDefinition instanceof ReplaceResourceActionDefinition)) {
+                $routeDefinition = new DropdownOptionsForNewObjectRouteDefinition(
+                    $actionDefinition->getResourceName(),
+                    $actionDefinition->getBoundedContextId(),
+                );
+                $routes[$routeDefinition->getOperationId()] = $routeDefinition;
+            }
+            if (class_exists(DropdownOptionsForExistingObjectRouteDefinition::class) && $actionDefinition instanceof ModifyResourceActionDefinition) {
+                $routeDefinition = new DropdownOptionsForExistingObjectRouteDefinition(
+                    $actionDefinition->getResourceName(),
+                    $actionDefinition->getBoundedContextId(),
+                );
+                $routes[$routeDefinition->getOperationId()] = $routeDefinition;
+            }
+            if (class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
+                $routeDefinition = new DropdownOptionsForGlobalMethodRouteDefinition(
+                    $actionDefinition->getMethod()->getDeclaringClass(),
+                    $actionDefinition->getBoundedContextId(),
+                    $actionDefinition->getMethod(),
+                );
+                $routes[$routeDefinition->getOperationId()] = $routeDefinition;
+            }
+            if (!$found) {
+                $this->logger->debug('No route definition created for ' . get_debug_type($actionDefinition));
+            }
         }
 
-        $getAllContext = $apieContext->withContext(RequestMethod::class, RequestMethod::GET)
-            ->registerInstance($boundedContext);
-        foreach ($boundedContext->resources->filterOnApieContext($getAllContext) as $resource) {
-            $definition = new DisplayResourceOverviewRouteDefinition($resource, $boundedContext->getId());
-            $actions[$definition->getOperationId()] = $definition;
-        }
-
-        $globalActionContext = $apieContext->withContext(ContextConstants::GLOBAL_METHOD, true);
-        foreach ($boundedContext->actions->filterOnApieContext($globalActionContext) as $action) {
-            $definition = new RunGlobalMethodFormRouteDefinition($action, $boundedContext->getId());
-            $actions[$definition->getOperationId()] = $definition;
-        }
-
-        return new ActionHashmap($actions);
+        return new ActionHashmap($routes);
     }
 }

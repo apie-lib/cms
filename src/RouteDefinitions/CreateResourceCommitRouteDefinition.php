@@ -1,7 +1,7 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\Cms\Controllers\CreateResourceFormController;
+use Apie\Cms\Controllers\FormCommitController;
 use Apie\Common\ActionDefinitions\ActionDefinitionInterface;
 use Apie\Common\ActionDefinitions\CreateResourceActionDefinition;
 use Apie\Common\ActionDefinitions\ReplaceResourceActionDefinition;
@@ -11,7 +11,7 @@ use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
 use ReflectionClass;
 
-class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
+class CreateResourceCommitRouteDefinition extends AbstractCmsRouteDefinition
 {
     public static function createFrom(ActionDefinitionInterface $actionDefinition): ?AbstractCmsRouteDefinition
     {
@@ -32,7 +32,7 @@ class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getMethod(): RequestMethod
     {
-        return RequestMethod::GET;
+        return RequestMethod::POST;
     }
 
     public function getUrl(): UrlRouteDefinition
@@ -42,7 +42,7 @@ class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getController(): string
     {
-        return CreateResourceFormController::class;
+        return FormCommitController::class;
     }
 
     public function getAction(): string
@@ -52,6 +52,6 @@ class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
 
     public function getOperationId(): string
     {
-        return 'create-resource-form-' . $this->class->getShortName();
+        return 'create-resource-commit-' . $this->class->getShortName();
     }
 }
