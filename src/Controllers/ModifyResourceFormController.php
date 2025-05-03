@@ -47,7 +47,7 @@ class ModifyResourceFormController
         }
         try {
             $resource = $this->apieFacade->find(
-                IdentifierUtils::entityClassToIdentifier($resourceClass)->newInstance($id),
+                IdentifierUtils::idStringToIdentifier($id, $context),
                 new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
             );
         } catch (InvalidStringForValueObjectException|EntityNotFoundException $error) {
