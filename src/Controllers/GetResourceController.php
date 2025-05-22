@@ -32,6 +32,8 @@ class GetResourceController
             new ReflectionClass($request->getAttribute(ContextConstants::RESOURCE_NAME)),
             new BoundedContextId($context->getContext(ContextConstants::BOUNDED_CONTEXT_ID))
         );
-        return $this->responseFactory->createComponentPageRender($component, $data->apieContext);
+        return $this->responseFactory->createComponentPageRender($component, $data->apieContext)
+            ->withHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->withHeader('Pragma', 'no-cache');
     }
 }
