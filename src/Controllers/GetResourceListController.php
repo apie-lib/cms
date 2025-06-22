@@ -35,6 +35,7 @@ class GetResourceListController
 
         return $this->responseFactory->createComponentPageRender($component, $data->apieContext)
             ->withHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-            ->withHeader('Pragma', 'no-cache');;
+            ->withHeader('Pragma', 'no-cache');
+        ;
     }
 }
