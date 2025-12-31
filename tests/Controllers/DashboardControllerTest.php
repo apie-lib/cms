@@ -1,5 +1,5 @@
 <?php
-namespace Apie\Tests\Cms;
+namespace Apie\Tests\Cms\Controllers;
 
 use Apie\Cms\Controllers\DashboardController;
 use Apie\Cms\Services\ResponseFactory;
