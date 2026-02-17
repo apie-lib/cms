@@ -14,7 +14,7 @@ class CmsServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Services\ResponseFactory::class,
             function ($app) {
                 return new \Apie\Cms\Services\ResponseFactory(
@@ -23,7 +23,7 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class,
             function ($app) {
                 return new \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider(
@@ -43,7 +43,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class], 'apie.common.route_definition');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\DashboardController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\DashboardController(
@@ -62,7 +62,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\DashboardController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\LayoutPicker::class,
             function ($app) {
                 return new \Apie\Cms\LayoutPicker(
@@ -72,7 +72,7 @@ class CmsServiceProvider extends ServiceProvider
         );
         $this->app->bind('apie.cms.dashboard_content', \Apie\Cms\EmptyDashboard::class);
         
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\EmptyDashboard::class,
             function ($app) {
                 return new \Apie\Cms\EmptyDashboard(
@@ -80,7 +80,7 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\LastActionResultController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\LastActionResultController(
@@ -99,7 +99,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\LastActionResultController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\GetResourceController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\GetResourceController(
@@ -118,7 +118,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\GetResourceController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\GetResourceListController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\GetResourceListController(
@@ -137,7 +137,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\GetResourceListController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\RunGlobalMethodFormController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\RunGlobalMethodFormController(
@@ -157,7 +157,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\RunGlobalMethodFormController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController(
@@ -177,7 +177,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\RunMethodCallOnSingleResourceFormController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\CreateResourceFormController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\CreateResourceFormController(
@@ -197,7 +197,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\CreateResourceFormController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\ModifyResourceFormController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\ModifyResourceFormController(
@@ -217,7 +217,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\ModifyResourceFormController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\RemoveResourceFormController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\RemoveResourceFormController(
@@ -237,7 +237,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\RemoveResourceFormController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\Cms\Controllers\FormCommitController::class,
             function ($app) {
                 return new \Apie\Cms\Controllers\FormCommitController(
@@ -257,7 +257,7 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Controllers\FormCommitController::class], 'controller.service_arguments');
-        $this->app->singleton(
+        $this->registerSingleton(
             'cms.layout.graphite_design_system',
             function ($app) {
                 return \Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout::createRenderer(
@@ -266,7 +266,7 @@ class CmsServiceProvider extends ServiceProvider
                 
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             'cms.layout.ionic_design_system',
             function ($app) {
                 return \Apie\CmsLayoutIonic\IonicDesignSystemLayout::createRenderer(
@@ -275,7 +275,7 @@ class CmsServiceProvider extends ServiceProvider
                 
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             'cms.layout.ugly_design_system',
             function ($app) {
                 return \Apie\CmsLayoutUgly\UglyDesignSystemLayout::createRenderer(
