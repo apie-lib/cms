@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class DashboardControllerTest extends TestCase
@@ -47,7 +48,7 @@ class DashboardControllerTest extends TestCase
                 BoundedContextFactory::createHashmap(),
                 FormComponentFactory::create(),
                 FieldDisplayComponentFactory::create([]),
-                new ResourceActionFactory(new ActionDefinitionProvider())
+                new ResourceActionFactory(new ActionDefinitionProvider(new ServiceLocator([])))
             ),
             new ContextBuilderFactory(),
             new ResponseFactory(
