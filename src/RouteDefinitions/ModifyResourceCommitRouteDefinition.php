@@ -35,6 +35,11 @@ class ModifyResourceCommitRouteDefinition extends AbstractCmsRouteDefinition
         return new UrlRouteDefinition('/resource/edit/' . $this->class->getShortName() . '/{id}');
     }
 
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
+
     public function getController(): string
     {
         return FormCommitController::class;

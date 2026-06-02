@@ -46,6 +46,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
         $routes[$definition->getOperationId()] = $definition;
         $definition = new LastActionResultRouteDefinition($boundedContext->getId());
         $routes[$definition->getOperationId()] = $definition;
+
         foreach ($this->actionDefinitionProvider->provideActionDefinitions($boundedContext, $apieContext) as $actionDefinition) {
             $found = false;
             foreach (self::CLASSES as $routeDefinitionClass) {

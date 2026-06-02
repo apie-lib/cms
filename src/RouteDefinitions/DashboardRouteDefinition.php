@@ -56,4 +56,9 @@ class DashboardRouteDefinition implements HasRouteDefinition
     {
         return new UrlPrefixList([UrlPrefix::CMS]);
     }
+
+    public function getMainMenuUri(): UrlRouteDefinition
+    {
+        return $this->getUrl();
+    }
 }

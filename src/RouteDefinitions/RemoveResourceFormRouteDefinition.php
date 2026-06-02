@@ -35,6 +35,11 @@ class RemoveResourceFormRouteDefinition extends AbstractCmsRouteDefinition
         return new UrlRouteDefinition('/resource/delete/' . $this->class->getShortName() . '/{id}');
     }
 
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
+
     public function getController(): string
     {
         return RemoveResourceFormController::class;

@@ -54,4 +54,9 @@ class CreateResourceFormRouteDefinition extends AbstractCmsRouteDefinition
     {
         return 'create-resource-form-' . $this->class->getShortName();
     }
+
+    public function getMainMenuUri(): UrlRouteDefinition
+    {
+        return new UrlRouteDefinition($this->class->getShortName() . '/Create');
+    }
 }

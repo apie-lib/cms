@@ -54,4 +54,9 @@ class CreateResourceCommitRouteDefinition extends AbstractCmsRouteDefinition
     {
         return 'create-resource-commit-' . $this->class->getShortName();
     }
+
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
 }

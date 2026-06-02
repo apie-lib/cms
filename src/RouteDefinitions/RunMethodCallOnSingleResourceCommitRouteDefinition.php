@@ -56,4 +56,9 @@ class RunMethodCallOnSingleResourceCommitRouteDefinition extends AbstractCmsRout
         $suffix = $methodName === '__invoke' ? '' : ('-' . $methodName);
         return 'call-resource-commit-' . $this->class->getShortName() . $suffix;
     }
+
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
 }

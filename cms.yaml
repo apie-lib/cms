@@ -20,6 +20,11 @@ services:
 
   Apie\Cms\LayoutPicker:
 
+  Apie\Cms\MenuStructure\MainMenuBuilder:
+    arguments:
+      - '@Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider'
+      - '@Apie\Core\BoundedContext\BoundedContextHashmap'
+
   apie.cms.dashboard_content:
     alias: Apie\Cms\EmptyDashboard
   

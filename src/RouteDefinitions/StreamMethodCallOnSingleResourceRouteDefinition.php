@@ -39,6 +39,11 @@ class StreamMethodCallOnSingleResourceRouteDefinition extends AbstractCmsRouteDe
         return new UrlRouteDefinition('/resource/action/' . $this->class->getShortName() . '/{id}/download/{properties}');
     }
 
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
+
     public function getController(): string
     {
         return FormCommitController::class;

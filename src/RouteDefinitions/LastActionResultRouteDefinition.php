@@ -26,6 +26,11 @@ class LastActionResultRouteDefinition implements HasRouteDefinition
     {
         return new UrlRouteDefinition('/last-action-result/{id}');
     }
+
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
     /**
      * @return class-string<object>
      */

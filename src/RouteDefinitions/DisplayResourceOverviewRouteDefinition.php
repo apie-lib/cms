@@ -51,4 +51,9 @@ class DisplayResourceOverviewRouteDefinition extends AbstractCmsRouteDefinition
     {
         return 'cms.resource.' . $this->class->getShortName();
     }
+
+    public function getMainMenuUri(): UrlRouteDefinition
+    {
+        return new UrlRouteDefinition($this->class->getShortName());
+    }
 }

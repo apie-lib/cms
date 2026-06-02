@@ -49,6 +49,12 @@ class RunGlobalMethodFormRouteDefinition extends AbstractCmsRouteDefinition
         return new UrlRouteDefinition('action/' . $this->method->getDeclaringClass()->getShortName() . '/' . $methodName);
     }
 
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        $url = preg_replace('/^\/?action\//', '', $this->getUrl()->toNative());
+        return new UrlRouteDefinition($url);
+    }
+
     public function getController(): string
     {
         return RunGlobalMethodFormController::class;

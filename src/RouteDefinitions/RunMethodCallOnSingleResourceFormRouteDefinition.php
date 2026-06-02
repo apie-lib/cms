@@ -40,6 +40,11 @@ class RunMethodCallOnSingleResourceFormRouteDefinition extends AbstractCmsRouteD
         return new UrlRouteDefinition('/resource/action/' . $this->class->getShortName() . '/{id}/' . $methodName);
     }
 
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
+
     public function getController(): string
     {
         return RunMethodCallOnSingleResourceFormController::class;

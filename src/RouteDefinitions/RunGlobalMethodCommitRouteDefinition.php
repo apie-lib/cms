@@ -49,6 +49,11 @@ class RunGlobalMethodCommitRouteDefinition extends AbstractCmsRouteDefinition
         return new UrlRouteDefinition('action/' . $this->method->getDeclaringClass()->getShortName() . '/' . $methodName);
     }
 
+    public function getMainMenuUri(): ?UrlRouteDefinition
+    {
+        return null;
+    }
+
     public function getController(): string
     {
         return FormCommitController::class;

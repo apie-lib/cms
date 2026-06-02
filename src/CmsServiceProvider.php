@@ -70,6 +70,15 @@ class CmsServiceProvider extends ServiceProvider
                 );
             }
         );
+        $this->registerSingleton(
+            \Apie\Cms\MenuStructure\MainMenuBuilder::class,
+            function ($app) {
+                return new \Apie\Cms\MenuStructure\MainMenuBuilder(
+                    $app->make(\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class),
+                    $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class)
+                );
+            }
+        );
         $this->app->bind('apie.cms.dashboard_content', \Apie\Cms\EmptyDashboard::class);
         
         $this->registerSingleton(
