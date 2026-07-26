@@ -108,6 +108,11 @@ services:
       - '@Apie\Cms\Services\ResponseFactory'
     tags: ['controller.service_arguments']
 
+  Apie\Cms\Translator\GetTranslationsFromMenu:
+    arguments:
+      - '@Apie\Cms\MenuStructure\MainMenuBuilder'
+    tags: [apie.translation_collector]
+
   cms.layout.graphite_design_system:
     class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
     factory:

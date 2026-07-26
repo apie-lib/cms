@@ -267,6 +267,22 @@ class CmsServiceProvider extends ServiceProvider
         );
         $this->app->tag([\Apie\Cms\Controllers\FormCommitController::class], 'controller.service_arguments');
         $this->registerSingleton(
+            \Apie\Cms\Translator\GetTranslationsFromMenu::class,
+            function ($app) {
+                return new \Apie\Cms\Translator\GetTranslationsFromMenu(
+                    $app->make(\Apie\Cms\MenuStructure\MainMenuBuilder::class)
+                );
+            }
+        );
+        \Apie\ServiceProviderGenerator\TagMap::register(
+            $this->app,
+            \Apie\Cms\Translator\GetTranslationsFromMenu::class,
+            array(
+              0 => 'apie.translation_collector',
+            )
+        );
+        $this->app->tag([\Apie\Cms\Translator\GetTranslationsFromMenu::class], 'apie.translation_collector');
+        $this->registerSingleton(
             'cms.layout.graphite_design_system',
             function ($app) {
                 return \Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout::createRenderer(
