@@ -75,7 +75,8 @@ class CmsServiceProvider extends ServiceProvider
             function ($app) {
                 return new \Apie\Cms\MenuStructure\MainMenuBuilder(
                     $app->make(\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class),
-                    $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class)
+                    $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class),
+                    $app->make(\Apie\HtmlBuilders\Configuration\ApplicationConfiguration::class)
                 );
             }
         );

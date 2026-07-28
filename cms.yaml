@@ -24,6 +24,7 @@ services:
     arguments:
       - '@Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider'
       - '@Apie\Core\BoundedContext\BoundedContextHashmap'
+      - '@Apie\HtmlBuilders\Configuration\ApplicationConfiguration'
 
   apie.cms.dashboard_content:
     alias: Apie\Cms\EmptyDashboard

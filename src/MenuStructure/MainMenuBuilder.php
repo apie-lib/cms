@@ -11,21 +11,26 @@ use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\Context\ApieContext;
 use Apie\Core\ContextConstants;
 use Apie\Core\Enums\RequestMethod;
+use Apie\Core\Translator\ValueObjects\MenuHeader;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
+use Apie\HtmlBuilders\Configuration\ApplicationConfiguration;
 
 class MainMenuBuilder
 {
     public function __construct(
-        private CmsRouteDefinitionProvider $routeDefinitionProvider,
-        private BoundedContextHashmap $boundedContextHashmap
+        private readonly CmsRouteDefinitionProvider $routeDefinitionProvider,
+        private readonly BoundedContextHashmap $boundedContextHashmap,
+        private readonly ApplicationConfiguration $applicationConfiguration,
     ) {
     }
 
-    public function buildMenu(ApieContext $apieContext, ?BoundedContextId $prio = null): MenuNode
-    {
+    public function buildMenu(
+        ApieContext $apieContext,
+        ?BoundedContextId $prio = null
+    ): MenuNode {
         $menu = new MenuNode(
             id: 'root',
-            name: '',
+            name: MenuHeader::createRoot($apieContext),
             route: null,
             icon: null,
         );
@@ -60,7 +65,12 @@ class MainMenuBuilder
             $boundedContext,
             $apieContext,
         );
-        
+        $configuration = $this->applicationConfiguration->createConfiguration(
+            $apieContext,
+            $this->boundedContextHashmap,
+            $boundedContext->getId()
+        );
+
         /** @var AbstractCmsRouteDefinition $routeDefinition */
         foreach ($routeDefinitions as $routeDefinition) {
             $url = $routeDefinition->getMainMenuUri();
@@ -71,8 +81,8 @@ class MainMenuBuilder
                 $createdList = $createdUrl->toStringList();
                 $menuBuilder->addLeaf($createdList, new MenuNode(
                     id: $prefix . $routeDefinition->getOperationId() . $suffix,
-                    name: $createdList->last(),
-                    route: $createdUrl->toNative(),
+                    name: MenuHeader::createRoot($apieContext, $createdList->join('.')),
+                    route: $configuration->getContextUrl($routeDefinition->getUrl()->toNative()),
                     icon: null,
                 ));
             }
