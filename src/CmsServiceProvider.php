@@ -71,12 +71,21 @@ class CmsServiceProvider extends ServiceProvider
             }
         );
         $this->registerSingleton(
+            \Apie\Cms\IconResolver::class,
+            function ($app) {
+                return new \Apie\Cms\IconResolver(
+                    $app->bound(\Symfony\UX\Icons\IconRegistryInterface::class) ? $app->make(\Symfony\UX\Icons\IconRegistryInterface::class) : null
+                );
+            }
+        );
+        $this->registerSingleton(
             \Apie\Cms\MenuStructure\MainMenuBuilder::class,
             function ($app) {
                 return new \Apie\Cms\MenuStructure\MainMenuBuilder(
                     $app->make(\Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class),
                     $app->make(\Apie\Core\BoundedContext\BoundedContextHashmap::class),
-                    $app->make(\Apie\HtmlBuilders\Configuration\ApplicationConfiguration::class)
+                    $app->make(\Apie\HtmlBuilders\Configuration\ApplicationConfiguration::class),
+                    $app->make(\Apie\Cms\IconResolver::class)
                 );
             }
         );
@@ -283,33 +292,6 @@ class CmsServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\Cms\Translator\GetTranslationsFromMenu::class], 'apie.translation_collector');
-        $this->registerSingleton(
-            'cms.layout.graphite_design_system',
-            function ($app) {
-                return \Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout::createRenderer(
-                
-                );
-                
-            }
-        );
-        $this->registerSingleton(
-            'cms.layout.ionic_design_system',
-            function ($app) {
-                return \Apie\CmsLayoutIonic\IonicDesignSystemLayout::createRenderer(
-                
-                );
-                
-            }
-        );
-        $this->registerSingleton(
-            'cms.layout.ugly_design_system',
-            function ($app) {
-                return \Apie\CmsLayoutUgly\UglyDesignSystemLayout::createRenderer(
-                
-                );
-                
-            }
-        );
         
     }
 }

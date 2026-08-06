@@ -1,6 +1,7 @@
 <?php
 namespace Apie\Cms\MenuStructure;
 
+use Apie\Cms\IconResolver;
 use Apie\Cms\RouteDefinitions\AbstractCmsRouteDefinition;
 use Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider;
 use Apie\Common\MenuStructure\MenuBuilder;
@@ -21,6 +22,7 @@ class MainMenuBuilder
         private readonly CmsRouteDefinitionProvider $routeDefinitionProvider,
         private readonly BoundedContextHashmap $boundedContextHashmap,
         private readonly ApplicationConfiguration $applicationConfiguration,
+        private readonly IconResolver $iconResolver
     ) {
     }
 
@@ -29,7 +31,6 @@ class MainMenuBuilder
         ?BoundedContextId $prio = null
     ): MenuNode {
         $menu = new MenuNode(
-            id: 'root',
             name: MenuHeader::createRoot($apieContext),
             route: null,
             icon: null,
@@ -50,7 +51,7 @@ class MainMenuBuilder
             $children[$key] = $this->buildMenuForBoundedContext($boundedContext, $subcontext);
         }
         $menu->children = $children;
-        return $menu;
+        return $menu->prune();
     }
 
     public function buildMenuForBoundedContext(BoundedContext $boundedContext, ApieContext $apieContext): MenuNode
@@ -77,16 +78,28 @@ class MainMenuBuilder
             if (!$url || !in_array($routeDefinition->getMethod(), [RequestMethod::ANY, RequestMethod::GET])) {
                 continue;
             }
-            foreach ($this->createUrlList($boundedContext, $url) as $suffix => $createdUrl) {
+            $action = $routeDefinition->getAction();
+            $subcontext = $apieContext->withMultipleContext($routeDefinition->getRouteAttributes());
+            $allowed = $action::isAuthorized($subcontext, true);
+            $resourceName = $subcontext->getContext(ContextConstants::RESOURCE_NAME, false);
+            $icon = null;
+            if ($resourceName && class_exists($resourceName)) {
+                $icon = $this->iconResolver->resolve($resourceName);
+            }
+            foreach ($this->createUrlList($boundedContext, $url) as $createdUrl) {
                 $createdList = $createdUrl->toStringList();
+                // $apieContext is deliberate choice as we want to be able to change translations per bounded context
                 $menuBuilder->addLeaf($createdList, new MenuNode(
-                    id: $prefix . $routeDefinition->getOperationId() . $suffix,
-                    name: MenuHeader::createRoot($apieContext, $createdList->join('.')),
+                    name: MenuHeader::createRoot($apieContext, $boundedContext->getId() . '.' . $createdList->join('.')),
                     route: $configuration->getContextUrl($routeDefinition->getUrl()->toNative()),
-                    icon: null,
+                    icon: $icon,
+                    allowed: $allowed
                 ));
             }
         }
+        $root = $menuBuilder->getRoot();
+        $root->allowed = array_any($root->children->toArray(), function (MenuNode $node) { return $node->allowed; });
+        $root->icon = $this->iconResolver->resolve($boundedContext->getId());
         return $menuBuilder->getRoot();
     }
 
@@ -103,7 +116,7 @@ class MainMenuBuilder
         foreach ($placeholders as $placeholder) {
             if ($placeholder === ContextConstants::RESOURCE_NAME) {
                 foreach ($boundedContext->resources as $resource) {
-                    $urlList['.' . $resource->getShortName()] = $url->withFilledInPlaceholders([
+                    $urlList[$boundedContext->getId() . '.' . $resource->getShortName()] = $url->withFilledInPlaceholders([
                         ContextConstants::RESOURCE_NAME => $resource->getShortName(),
                         ...$replacements,
                     ]);

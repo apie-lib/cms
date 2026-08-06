@@ -20,11 +20,16 @@ services:
 
   Apie\Cms\LayoutPicker:
 
+  Apie\Cms\IconResolver:
+    arguments:
+      - '@?Symfony\UX\Icons\IconRegistryInterface'
+
   Apie\Cms\MenuStructure\MainMenuBuilder:
     arguments:
       - '@Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider'
       - '@Apie\Core\BoundedContext\BoundedContextHashmap'
       - '@Apie\HtmlBuilders\Configuration\ApplicationConfiguration'
+      - '@Apie\Cms\IconResolver'
 
   apie.cms.dashboard_content:
     alias: Apie\Cms\EmptyDashboard
@@ -113,21 +118,3 @@ services:
     arguments:
       - '@Apie\Cms\MenuStructure\MainMenuBuilder'
     tags: [apie.translation_collector]
-
-  cms.layout.graphite_design_system:
-    class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
-    factory:
-      -  Apie\CmsLayoutGraphite\GraphiteDesignSystemLayout
-      - 'createRenderer'
-
-  cms.layout.ionic_design_system:
-    class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
-    factory:
-      -  Apie\CmsLayoutIonic\IonicDesignSystemLayout
-      - 'createRenderer'
-
-  cms.layout.ugly_design_system:
-    class: Apie\TwigTemplateLayoutRenderer\TwigRenderer
-    factory:
-      -  Apie\CmsLayoutUgly\UglyDesignSystemLayout
-      - 'createRenderer'
