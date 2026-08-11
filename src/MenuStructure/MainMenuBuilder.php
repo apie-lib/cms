@@ -98,7 +98,9 @@ class MainMenuBuilder
             }
         }
         $root = $menuBuilder->getRoot();
-        $root->allowed = array_any($root->children->toArray(), function (MenuNode $node) { return $node->allowed; });
+        $root->allowed = array_any($root->children->toArray(), function (MenuNode $node) {
+            return $node->allowed;
+        });
         $root->icon = $this->iconResolver->resolve($boundedContext->getId());
         return $menuBuilder->getRoot();
     }
