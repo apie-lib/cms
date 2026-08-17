@@ -14,7 +14,7 @@ use ReflectionMethod;
 abstract class AbstractCmsRouteDefinition implements HasRouteDefinition, HasActionDefinition
 {
     /**
-     * @param ReflectionClass<object> $class
+     * @param ReflectionClass<covariant object> $class
      */
     public function __construct(
         protected readonly ReflectionClass $class,

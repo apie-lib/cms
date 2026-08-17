@@ -16,7 +16,7 @@ final class IconResolver
     }
 
     /**
-     * @param ReflectionClass<object>|class-string<object>|string $className
+     * @param ReflectionClass<covariant object>|class-string<covariant object>|string $className
      */
     public function resolve(ReflectionClass|string $className): string
     {
@@ -511,7 +511,7 @@ final class IconResolver
     }
 
     /**
-     * @param ReflectionClass<object>|string $className
+     * @param ReflectionClass<covariant object>|string $className
      */
     private function fallback(ReflectionClass|string $className, string $fallbackIcon): string
     {
