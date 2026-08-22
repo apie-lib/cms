@@ -20,7 +20,7 @@
     }
   },
   "require": {
-    "php": ">=8.3",
+    "php": ">=8.4",
     "apie/common": "self.version",
     "apie/core": "self.version",
     "apie/html-builders": "self.version",
@@ -31,7 +31,7 @@
     "apie/service-provider-generator": "0.14.0",
     "illuminate/support": "*",
     "phpunit/phpunit": "^11.5.2",
-    "phpspec/prophecy-phpunit": "^2.2",
+    "phpspec/prophecy-phpunit": "^2.5",
     "symfony/event-dispatcher": "^7.2"
   },
   "suggest": {
