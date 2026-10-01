@@ -14,7 +14,26 @@ This package is part of the [Apie](https://github.com/apie-lib) library.
 The code is maintained in a monorepo, so PR's need to be sent to the [monorepo](https://github.com/apie-lib/apie-lib-monorepo/pulls)
 
 ## Documentation
-Apie/cms is the package used to create cms actions. It uses apie/html-builders to create component classes and uses regular backend controllers to render the pages. A layout package is required to make it work in an application.
+`apie/cms` builds a complete admin panel (dashboard, resource CRUD forms, method-call actions) on top of your
+Apie domain objects. It renders pages through `apie/html-builders` components and regular HTTP controllers, and
+relies on a separate layout package (see below) to actually style the pages.
 
-Right now we only have apie/cms-layout-graphite
-More layouts will be added in a later stadium.
+### Standalone usage
+```bash
+composer require apie/cms
+```
+
+A CMS layout must be installed to render anything, e.g. `apie/cms-layout-graphite`, `apie/cms-layout-ionic`,
+`apie/cms-layout-kids` or `apie/cms-layout-ugly`; `Apie\Cms\LayoutPicker` selects the active layout (defaulting to `LayoutEnum::LAYOUT`,
+overridable per-request with a `?layout=` query parameter). You can also register your own `TwigRenderer` in the
+service container with your own templates instead of using a bundled layout.
+
+### Symfony integration
+Through `apie/apie-bundle`, the CMS controllers (`DashboardController`, `GetResourceController`,
+`CreateResourceFormController`, ...) and their route definitions in `Apie\Cms\RouteDefinitions` are registered
+automatically, exposing the admin panel routes for every configured bounded context. CSRF protection comes from
+Symfony's framework bundle, so it is recommended to keep that bundle enabled.
+
+### Laravel integration
+`apie/laravel-apie` registers the generated `Apie\Cms\CmsServiceProvider`, wiring up the same controllers, route
+definitions and `LayoutPicker`/`IconResolver` services for a Laravel application.
