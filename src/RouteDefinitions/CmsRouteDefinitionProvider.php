@@ -1,9 +1,6 @@
 <?php
 namespace Apie\Cms\RouteDefinitions;
 
-use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForExistingObjectRouteDefinition;
-use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForGlobalMethodRouteDefinition;
-use Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForNewObjectRouteDefinition;
 use Apie\Common\ActionDefinitionProvider;
 use Apie\Common\ActionDefinitions\CreateResourceActionDefinition;
 use Apie\Common\ActionDefinitions\ModifyResourceActionDefinition;
@@ -36,6 +33,7 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
     public function __construct(
         private ActionDefinitionProvider $actionDefinitionProvider,
         private LoggerInterface $logger,
+        private bool $enableCmsDropdown = true,
     ) {
     }
 
@@ -56,23 +54,23 @@ class CmsRouteDefinitionProvider implements RouteDefinitionProviderInterface
                     $found = true;
                 }
             }
-            if (class_exists(DropdownOptionsForNewObjectRouteDefinition::class) &&
+            if ($this->enableCmsDropdown &&
                 ($actionDefinition instanceof CreateResourceActionDefinition || $actionDefinition instanceof ReplaceResourceActionDefinition)) {
-                $routeDefinition = new DropdownOptionsForNewObjectRouteDefinition(
+                $routeDefinition = new \Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForNewObjectRouteDefinition(
                     $actionDefinition->getResourceName(),
                     $actionDefinition->getBoundedContextId(),
                 );
                 $routes[$routeDefinition->getOperationId()] = $routeDefinition;
             }
-            if (class_exists(DropdownOptionsForExistingObjectRouteDefinition::class) && $actionDefinition instanceof ModifyResourceActionDefinition) {
-                $routeDefinition = new DropdownOptionsForExistingObjectRouteDefinition(
+            if ($this->enableCmsDropdown && $actionDefinition instanceof ModifyResourceActionDefinition) {
+                $routeDefinition = new \Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForExistingObjectRouteDefinition(
                     $actionDefinition->getResourceName(),
                     $actionDefinition->getBoundedContextId(),
                 );
                 $routes[$routeDefinition->getOperationId()] = $routeDefinition;
             }
-            if (class_exists(DropdownOptionsForGlobalMethodRouteDefinition::class) && $actionDefinition instanceof RunGlobalMethodDefinition) {
-                $routeDefinition = new DropdownOptionsForGlobalMethodRouteDefinition(
+            if ($this->enableCmsDropdown && $actionDefinition instanceof RunGlobalMethodDefinition) {
+                $routeDefinition = new \Apie\CmsApiDropdownOption\RouteDefinitions\DropdownOptionsForGlobalMethodRouteDefinition(
                     $actionDefinition->getMethod()->getDeclaringClass(),
                     $actionDefinition->getBoundedContextId(),
                     $actionDefinition->getMethod(),

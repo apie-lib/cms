@@ -28,7 +28,8 @@ class CmsServiceProvider extends ServiceProvider
             function ($app) {
                 return new \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider(
                     $app->make(\Apie\Common\ActionDefinitionProvider::class),
-                    $app->make(\Psr\Log\LoggerInterface::class)
+                    $app->make(\Psr\Log\LoggerInterface::class),
+                    $this->parseArgument('%apie.enable_cms_dropdown%', \Apie\Cms\RouteDefinitions\CmsRouteDefinitionProvider::class, 2)
                 );
             }
         );

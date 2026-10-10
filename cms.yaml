@@ -8,7 +8,8 @@ services:
     arguments:
       - '@Apie\Common\ActionDefinitionProvider'
       - '@Psr\Log\LoggerInterface'
-    tags: 
+      - '%apie.enable_cms_dropdown%'
+    tags:
       - name: apie.common.route_definition
   Apie\Cms\Controllers\DashboardController:
     arguments:
